@@ -1,16 +1,8 @@
-import inputSignal from './inputSignal.json';
+import inputSignal from './InputSignals/singleImpulse.json';
+// import inputSignal from './InputSignals/sine_16_32_32.json';
+// import inputSignal from './InputSignals/sine_16_128_128.json';
 
 $(document).ready(() => {
-
-    // * inputSignal.x = 32 samples, a single impulse (32) at sample zero
-    // * DFT: x => Rx X[] and Im X[]
-    // - Inverse DFT: Rx X[] and Im X[] => x[]
-    // * display data as JSON
-    // - draw diagrams using <svg id="svg"></svg>
-    //   - basic rendering
-    //   - add nice colours
-    // - extend JSON data model to include names and descriptions of axes ?
-    // - extend drawing of diagrams to include information about axes etc.
 
     const x = inputSignal.x;
     const { ReX, ImX } = dft(x);
