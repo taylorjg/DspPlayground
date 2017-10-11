@@ -7,11 +7,16 @@ $(document).ready(() => {
     const x = inputSignal.x;
     const { ReX, ImX } = dft(x);
     const x2 = inverseDft(ReX, ImX);
-    
+
     $('#x').html(JSON.stringify(x));
     $('#ReX').html(JSON.stringify(ReX));
     $('#ImX').html(JSON.stringify(ImX));
     $('#x2').html(JSON.stringify(x2));
+
+    drawDiagram('svg-x', x);
+    drawDiagram('svg-ReX', ReX);
+    drawDiagram('svg-ImX', ImX);
+    drawDiagram('svg-x2', x2);
 });
 
 const TWO_TIMES_PI = Math.PI * 2;
@@ -58,4 +63,70 @@ const normalise = (xs, isIm) => {
         const v2 = v1 * (isIm ? -1 : 1);
         return (!isIm && (index == 0 || index == nover2)) ? v2 / 2 : v2;
     });
+};
+
+const drawDiagram = (id, values) => {
+    const svg = document.getElementById(id);
+    const w = svg.scrollWidth;
+    const h = svg.scrollHeight;
+    // (assume 0.0 is in the centre of the y-axis)
+    // * draw grid lines
+    // - draw a small square for each point
+    //  - fixed size initially
+    [1, 2, 3].forEach(i => {
+        const y = h * i / 4;
+        const line = createElement('line', {
+            x1: 0,
+            y1: y,
+            x2: w - 1,
+            y2: y,
+            stroke: 'grey',
+            'stroke-width': 1,
+            'stroke-dasharray': [1, 4]
+        });
+        svg.appendChild(line);
+    });
+    [1, 2, 3, 4, 5, 6, 7].forEach(i => {
+        const x = w * i / 8;
+        const line = createElement('line', {
+            x1: x,
+            y1: 0,
+            x2: x,
+            y2: h - 1,
+            stroke: 'grey',
+            'stroke-width': 1,
+            'stroke-dasharray': [1, 4]
+        });
+        svg.appendChild(line);
+    });
+    const SQUARE_SIZE = w / 64;
+    const MIN_VALUE = Math.min(...values);
+    const MAX_VALUE = Math.max(...values);
+    const MAX = Math.max(Math.abs(MIN_VALUE), Math.abs(MAX_VALUE));
+    const RANGE = 4 * MAX || 64;
+    const MID_VALUE = 0;
+    const MID_Y = h / 2;
+    const STEP = h / RANGE;
+    values.forEach((value, index) => {
+        const x = w / values.length * index;
+        const dy = (value - MID_VALUE) * STEP;
+        const y = MID_Y - dy - (SQUARE_SIZE / 2);
+        const rect = createElement('rect', {
+            x,
+            y,
+            width: SQUARE_SIZE,
+            height: SQUARE_SIZE,
+            fill: 'black'
+        });
+        svg.appendChild(rect);
+    });
+};
+
+const createElement = (elementName, additionalAttributes) => {
+    const element = document.createElementNS('http://www.w3.org/2000/svg', elementName);
+    if (additionalAttributes) {
+        Object.keys(additionalAttributes).forEach(k =>
+            element.setAttribute(k, additionalAttributes[k]));
+    }
+    return element;
 };
