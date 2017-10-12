@@ -1,4 +1,8 @@
-import inputSignal from './InputSignals/singleImpulse.json';
+// import inputSignal from './InputSignals/singleImpulse.json';
+// import inputSignal from './InputSignals/sine_1_4_4.json';
+// import inputSignal from './InputSignals/sine_1_16_16.json';
+import inputSignal from './InputSignals/sine_1_16_32.json';
+// import inputSignal from './InputSignals/sine_4_16_64.json';
 // import inputSignal from './InputSignals/sine_16_32_32.json';
 // import inputSignal from './InputSignals/sine_16_128_128.json';
 
@@ -53,7 +57,7 @@ const inverseDft = (ReX, ImX) => {
         }
     }
 
-    return x.map(y => y > EPSILON ? y : 0);
+    return x.map(y => Math.abs(y) > EPSILON ? y : 0);
 };
 
 const normalise = (xs, isIm) => {
@@ -69,10 +73,6 @@ const drawDiagram = (id, values) => {
     const svg = document.getElementById(id);
     const w = svg.scrollWidth;
     const h = svg.scrollHeight;
-    // (assume 0.0 is in the centre of the y-axis)
-    // * draw grid lines
-    // - draw a small square for each point
-    //  - fixed size initially
     [1, 2, 3].forEach(i => {
         const y = h * i / 4;
         const line = createElement('line', {

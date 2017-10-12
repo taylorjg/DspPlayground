@@ -29,7 +29,7 @@ const INDICES = Array.from(Array(n).keys());
 const x = INDICES.map(index => {
     const r = TOTAL_RADIANS * index / n;
     const v = Math.sin(r);
-    return v > EPSILON ? v : 0;
+    return Math.abs(v) > EPSILON ? v : 0;
 });
 
 const inputSignal = { x };
