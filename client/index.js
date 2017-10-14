@@ -1,7 +1,8 @@
 // import inputSignal from './InputSignals/singleImpulse.json';
 // import inputSignal from './InputSignals/sine_1_4_4.json';
 // import inputSignal from './InputSignals/sine_1_16_16.json';
-import inputSignal from './InputSignals/sine_1_16_32.json';
+// import inputSignal from './InputSignals/sine_1_16_32.json';
+import inputSignal from './InputSignals/sine_1_16_128.json';
 // import inputSignal from './InputSignals/sine_4_16_64.json';
 // import inputSignal from './InputSignals/sine_16_32_32.json';
 // import inputSignal from './InputSignals/sine_16_128_128.json';
@@ -99,7 +100,7 @@ const drawDiagram = (id, values) => {
         });
         svg.appendChild(line);
     });
-    const SQUARE_SIZE = w / 64;
+    const SQUARE_SIZE = w / 128;
     const MIN_VALUE = Math.min(...values);
     const MAX_VALUE = Math.max(...values);
     const MAX = Math.max(Math.abs(MIN_VALUE), Math.abs(MAX_VALUE));
@@ -108,7 +109,7 @@ const drawDiagram = (id, values) => {
     const MID_Y = h / 2;
     const STEP = h / RANGE;
     values.forEach((value, index) => {
-        const x = w / values.length * index;
+        const x = w / values.length * index - (SQUARE_SIZE / 2);
         const dy = (value - MID_VALUE) * STEP;
         const y = MID_Y - dy - (SQUARE_SIZE / 2);
         const rect = createElement('rect', {
