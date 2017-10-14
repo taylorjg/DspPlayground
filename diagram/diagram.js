@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 const createElement = (elementName, additionalAttributes) => {
     const element = document.createElementNS('http://www.w3.org/2000/svg', elementName);
     if (additionalAttributes) {

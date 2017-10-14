@@ -1,4 +1,4 @@
-import inputSignal from '../../../InputSignals/sine_1_16_128.json';
+import inputSignal from '../../../InputSignals/sine_1_16_32.json';
 import { dft, inverseDft } from '../../../dsp';
 import { drawDiagram } from '../../../diagram';
 

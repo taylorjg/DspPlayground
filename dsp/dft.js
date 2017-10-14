@@ -1,5 +1,5 @@
 const TWO_TIMES_PI = Math.PI * 2;
-const EPSILON = 1e-13;
+const NUM_DECIMAL_PLACES = 6;
 
 export const dft = x => {
 
@@ -32,7 +32,7 @@ export const inverseDft = (ReX, ImX) => {
         }
     }
 
-    return x.map(y => Math.abs(y) > EPSILON ? y : 0);
+    return x.map(round);
 };
 
 const normalise = (xs, isIm) => {
@@ -43,3 +43,5 @@ const normalise = (xs, isIm) => {
         return (!isIm && (index == 0 || index == nover2)) ? v2 / 2 : v2;
     });
 };
+
+const round = x => Number(Number(x).toFixed(NUM_DECIMAL_PLACES));
