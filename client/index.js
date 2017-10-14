@@ -18,10 +18,10 @@ $(document).ready(() => {
     $('#ImX').html(JSON.stringify(ImX));
     $('#x2').html(JSON.stringify(x2));
 
-    drawDiagram('svg-x', x);
-    drawDiagram('svg-ReX', ReX);
-    drawDiagram('svg-ImX', ImX);
-    drawDiagram('svg-x2', x2);
+    drawDiagram('svg-x', x, 'x[]');
+    drawDiagram('svg-ReX', ReX, 'Re X[]');
+    drawDiagram('svg-ImX', ImX, 'Im X[]');
+    drawDiagram('svg-x2', x2, 'x2[]');
 });
 
 const TWO_TIMES_PI = Math.PI * 2;
@@ -70,8 +70,10 @@ const normalise = (xs, isIm) => {
     });
 };
 
-const drawDiagram = (id, values) => {
+const drawDiagram = (id, values, title) => {
     const svg = document.getElementById(id);
+    const caption = document.getElementById(`${id}-caption`);
+    caption.innerHTML = title;
     const w = svg.scrollWidth;
     const h = svg.scrollHeight;
     [1, 2, 3].forEach(i => {

@@ -24,3 +24,8 @@ svg {
     width: 640px;
     height: 320px;
 }
+
+figcaption {
+    text-align: center;
+    width: 640px;
+}
