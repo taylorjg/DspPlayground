@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DSP Playground | Chapter 8 | dft</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.3/Rx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.2/immutable.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="../../styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <span id="version" class="pull-right">(version:
+                <%= htmlWebpackPlugin.options.version %>)</span>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <pre id="x"></pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <pre id="ReX"></pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <pre id="ImX"></pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <pre id="x2"></pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <figure>
+                    <svg id="svg-x" />
+                    <figcaption id="svg-x-caption" />
+                </figure>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <figure>
+                    <svg id="svg-ReX" />
+                    <figcaption id="svg-ReX-caption" />
+                </figure>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <figure>
+                    <svg id="svg-ImX" />
+                    <figcaption id="svg-ImX-caption" />
+                </figure>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <figure>
+                    <svg id="svg-x2" />
+                    <figcaption id="svg-x2-caption" />
+                </figure>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
