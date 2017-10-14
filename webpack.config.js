@@ -3,22 +3,19 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const glob = require('glob');
 const packageJson = require('./package.json');
+
 const serverPublic = path.join(__dirname, 'server', 'public');
+const indexJsFiles = glob.sync('./client/**/index.js');
 
-// TODO: find these programmatically
-const jsFiles = [
-    './client/index.js',
-    './client/chapter8/dft/index.js'
-];
-
-const jsFileToWebpackConfigObject = jsFile => {
-    const dirName = path.dirname(jsFile);
-    const relativeName = path.relative('./client', dirName);
+const indexJsFileToWebpackConfigObject = indexJsFile => {
+    const dirName = path.dirname(indexJsFile);
+    const dirNameRelativeToClientDir = path.relative('./client', dirName);
     return {
-        entry: jsFile,
+        entry: indexJsFile,
         output: {
-            path: path.join(serverPublic, relativeName),
+            path: path.join(serverPublic, dirNameRelativeToClientDir),
             filename: 'bundle.js'
         },
         plugins: [
@@ -38,4 +35,4 @@ const jsFileToWebpackConfigObject = jsFile => {
     };
 };
 
-module.exports = jsFiles.map(jsFileToWebpackConfigObject);
+module.exports = indexJsFiles.map(indexJsFileToWebpackConfigObject);
