@@ -6,22 +6,28 @@ const path = require('path');
 const packageJson = require('./package.json');
 const serverPublic = path.join(__dirname, 'server', 'public');
 
-module.exports = [
-    {
-        entry: [
-            './client/index.js'
-        ],
+// TODO: find these programmatically
+const jsFiles = [
+    './client/index.js',
+    './client/chapter8/dft/index.js'
+];
+
+const jsFileToWebpackConfigObject = jsFile => {
+    const dirName = path.dirname(jsFile);
+    const relativeName = path.relative('./client', dirName);
+    return {
+        entry: jsFile,
         output: {
-            path: serverPublic,
+            path: path.join(serverPublic, relativeName),
             filename: 'bundle.js'
         },
         plugins: [
             new CopyWebpackPlugin([
-                { context: './client', from: '*.html' },
+                { context: dirName, from: '*.html' },
                 { context: './client', from: '*.css' }
             ]),
             new HtmlWebpackPlugin({
-                template: './client/index.html',
+                template: path.join(dirName, 'index.html'),
                 version: packageJson.version
             })
         ],
@@ -29,27 +35,7 @@ module.exports = [
         devServer: {
             contentBase: serverPublic
         }
-    },
-    {
-        entry: [
-            './client/chapter8/dft/index.js'
-        ],
-        output: {
-            path: serverPublic + '/chapter8/dft',
-            filename: 'bundle.js'
-        },
-        plugins: [
-            new CopyWebpackPlugin([
-                { context: './client/chapter8/dft', from: '*.html' }
-            ]),
-            new HtmlWebpackPlugin({
-                template: './client/chapter8/dft/index.html',
-                version: packageJson.version
-            })
-        ],
-        devtool: 'source-map',
-        devServer: {
-            contentBase: serverPublic
-        }
-    }
-];
+    };
+};
+
+module.exports = jsFiles.map(jsFileToWebpackConfigObject);
