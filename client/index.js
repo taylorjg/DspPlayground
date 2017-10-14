@@ -1,11 +1,11 @@
-// import inputSignal from './InputSignals/singleImpulse.json';
-// import inputSignal from './InputSignals/sine_1_4_4.json';
-// import inputSignal from './InputSignals/sine_1_16_16.json';
-// import inputSignal from './InputSignals/sine_1_16_32.json';
-import inputSignal from './InputSignals/sine_1_16_128.json';
-// import inputSignal from './InputSignals/sine_4_16_64.json';
-// import inputSignal from './InputSignals/sine_16_32_32.json';
-// import inputSignal from './InputSignals/sine_16_128_128.json';
+// import inputSignal from '../InputSignals/singleImpulse.json';
+// import inputSignal from '../InputSignals/sine_1_4_4.json';
+// import inputSignal from '../InputSignals/sine_1_16_16.json';
+// import inputSignal from '../InputSignals/sine_1_16_32.json';
+import inputSignal from '../InputSignals/sine_1_16_128.json';
+// import inputSignal from '../InputSignals/sine_4_16_64.json';
+// import inputSignal from '../InputSignals/sine_16_32_32.json';
+// import inputSignal from '../InputSignals/sine_16_128_128.json';
 import { dft, inverseDft } from '../dsp';
 import { drawDiagram } from '../diagram';
 
