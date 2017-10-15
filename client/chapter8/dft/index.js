@@ -1,4 +1,4 @@
-import inputSignal from '../../../InputSignals/sine_1_16_32.json';
+import inputSignal from '../../../InputSignals/sine_2_128_128.json';
 import { dft, inverseDft } from '../../../dsp';
 import { drawDiagram } from '../../../diagram';
 
@@ -13,8 +13,8 @@ $(document).ready(() => {
     $('#ImX').html(JSON.stringify(ImX));
     $('#x2').html(JSON.stringify(x2));
 
-    drawDiagram('svg-x', x, 'x[]');
-    drawDiagram('svg-ReX', ReX, 'Re X[]');
-    drawDiagram('svg-ImX', ImX, 'Im X[]');
-    drawDiagram('svg-x2', x2, 'x2[]');
+    drawDiagram('svg-x', x, 'x[ ]');
+    drawDiagram('svg-ReX', ReX, 'Re X[ ]');
+    drawDiagram('svg-ImX', ImX, 'Im X[ ]');
+    drawDiagram('svg-x2', x2, 'x2[ ]');
 });

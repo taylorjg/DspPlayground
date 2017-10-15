@@ -15,7 +15,10 @@ export const dft = x => {
         }
     }
 
-    return { ReX, ImX };
+    return {
+        ReX: ReX.map(round),
+        ImX: ImX.map(round)
+    };
 };
 
 export const inverseDft = (ReX, ImX) => {

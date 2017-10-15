@@ -11,11 +11,10 @@ const indexJsFiles = glob.sync('./client/**/index.js');
 
 const indexJsFileToWebpackConfigObject = indexJsFile => {
     const dirName = path.dirname(indexJsFile);
-    const dirNameRelativeToClientDir = path.relative('./client', dirName);
     return {
         entry: indexJsFile,
         output: {
-            path: path.join(serverPublic, dirNameRelativeToClientDir),
+            path: path.join(serverPublic, path.relative('./client', dirName)),
             filename: 'bundle.js'
         },
         plugins: [
