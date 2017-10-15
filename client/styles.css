@@ -37,6 +37,27 @@ svg {
     font-size: 8pt;
 }
 
+.diagram-inner-grid-line {
+    stroke: grey;
+    stroke-width: 1;
+    stroke-dasharray: 4, 4;
+}
+
+.diagram-division-line {
+    stroke: grey;
+    stroke-width: 1;
+}
+
+.diagram-outer-rect {
+    stroke: grey;
+    stroke-width: 1;
+    fill-opacity: 0;
+}
+
+.diagram-value {
+    fill: black;
+}
+
 figcaption {
     text-align: center;
     width: 700px;

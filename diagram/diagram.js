@@ -26,8 +26,8 @@ export const drawDiagram = (id, values, title) => {
     drawInnerHorizontalGridLines(dimensions, svg);
     drawInnerVerticalGridLines(dimensions, svg);
     drawOuterRect(dimensions, svg);
-    drawOuterHorizontalGridLines(dimensions, svg);
-    drawOuterVerticalGridLines(dimensions, svg);
+    drawHorizontalDivisionLines(dimensions, svg);
+    drawVerticalDivisionLines(dimensions, svg);
     drawValues(dimensions, svg, values);
 };
 
@@ -39,9 +39,7 @@ const drawInnerHorizontalGridLines = (d, svg) => {
             y1: y,
             x2: d.w - 1 - MARGIN,
             y2: y,
-            stroke: 'grey',
-            'stroke-width': 1,
-            'stroke-dasharray': [4, 4]
+            'class': 'diagram-inner-grid-line'
         });
         svg.appendChild(line);
     });
@@ -55,9 +53,7 @@ const drawInnerVerticalGridLines = (d, svg) => {
             y1: MARGIN,
             x2: x,
             y2: d.h - 1 - MARGIN,
-            stroke: 'grey',
-            'stroke-width': 1,
-            'stroke-dasharray': [4, 4]
+            'class': 'diagram-inner-grid-line'
         });
         svg.appendChild(line);
     });
@@ -69,14 +65,12 @@ const drawOuterRect = (d, svg) => {
         y: MARGIN,
         width: d.aw,
         height: d.ah,
-        stroke: 'grey',
-        'stroke-width': 1,
-        'fill-opacity': 0
+        'class': 'diagram-outer-rect'
     });
     svg.appendChild(rect);
 };
 
-const drawOuterHorizontalGridLines = (d, svg) => {
+const drawHorizontalDivisionLines = (d, svg) => {
     [0, 1, 2, 3, 4].forEach(i => {
         const y = MARGIN + d.ah * i / 4;
         const line = createElement('line', {
@@ -84,14 +78,13 @@ const drawOuterHorizontalGridLines = (d, svg) => {
             y1: y,
             x2: MARGIN,
             y2: y,
-            stroke: 'grey',
-            'stroke-width': 1
+            'class': 'diagram-division-line'
         });
         svg.appendChild(line);
     });
 };
 
-const drawOuterVerticalGridLines = (d, svg) => {
+const drawVerticalDivisionLines = (d, svg) => {
     [0, 1, 2, 3, 4, 5, 6, 7, 8].forEach(i => {
         const x = MARGIN + d.aw * i / 8;
         const line = createElement('line', {
@@ -99,8 +92,7 @@ const drawOuterVerticalGridLines = (d, svg) => {
             y1: d.h - 1 - MARGIN,
             x2: x,
             y2: d.h - 1 - (MARGIN / 2),
-            stroke: 'grey',
-            'stroke-width': 1
+            'class': 'diagram-division-line'
         });
         svg.appendChild(line);
     });
@@ -129,7 +121,7 @@ const drawValues = (d, svg, values) => {
             y,
             width: SQUARE_SIZE,
             height: SQUARE_SIZE,
-            fill: 'black'
+            'class': 'diagram-value'
         });
         svg.appendChild(rect);
     });
