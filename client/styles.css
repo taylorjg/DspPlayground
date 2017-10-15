@@ -1,5 +1,6 @@
 .container {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #map {
@@ -21,11 +22,11 @@ form {
 
 svg {
     background-color: aliceblue;
-    width: 660px;
-    height: 340px;
+    width: 680px;
+    height: 360px;
 }
 
 figcaption {
     text-align: center;
-    width: 660px;
+    width: 680px;
 }
