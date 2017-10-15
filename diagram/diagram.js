@@ -117,8 +117,11 @@ const drawValues = (d, svg, values) => {
     const MID_Y = d.h / 2;
     const STEP = d.ah / RANGE;
 
+    const isMultipleOf8 = values.length % 8 === 0;
+    const numDivisions = isMultipleOf8 ? values.length : values.length - 1;
+
     values.forEach((value, index) => {
-        const x = MARGIN + d.aw / values.length * index - (SQUARE_SIZE / 2);
+        const x = MARGIN + d.aw / numDivisions * index - (SQUARE_SIZE / 2);
         const dy = (value - MID_VALUE) * STEP;
         const y = MID_Y - dy - (SQUARE_SIZE / 2);
         const rect = createElement('rect', {
@@ -136,6 +139,7 @@ const drawValues = (d, svg, values) => {
 };
 
 const drawHorizontalAxisLabels = (d, svg, values) => {
+    const EIGHTH = Math.floor(values.length / 8);
     [0, 1, 2, 3, 4, 5, 6, 7, 8].forEach(i => {
         const x = MARGIN + d.aw * i / 8;
         const text = createElement('text', {
@@ -143,7 +147,7 @@ const drawHorizontalAxisLabels = (d, svg, values) => {
             y: d.h - 2,
             class: 'diagram-horizontal-axis-labels'
         });
-        const label = Math.ceil(values.length * i / 8);
+        const label = EIGHTH * i;
         text.appendChild(document.createTextNode(label));
         svg.appendChild(text);
     });
