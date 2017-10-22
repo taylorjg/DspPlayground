@@ -1,1 +1,7 @@
-// dummy js file so I can use a single Webpack config pattern for all projects
+import React from 'react';
+import { render } from 'react-dom';
+import App from './components/App';
+
+const app = document.getElementById('app');
+
+render(<App />, app);
