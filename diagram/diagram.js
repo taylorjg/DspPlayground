@@ -11,11 +11,7 @@ const createElement = (elementName, additionalAttributes) => {
     return element;
 };
 
-export const drawDiagram = (id, values, title) => {
-
-    const svg = document.getElementById(id);
-    const caption = document.getElementById(`${id}-caption`);
-    caption.innerHTML = title;
+export const drawDiagram = values => svg => {
 
     const w = svg.scrollWidth;
     const h = svg.scrollHeight;
