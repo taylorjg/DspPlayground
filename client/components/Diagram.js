@@ -5,7 +5,7 @@ import { drawDiagram } from '../../diagram';
 const Diagram = ({ dataPoints, caption }) => {
     return (
         <figure>
-            <svg ref={drawDiagram(dataPoints)} />
+            <svg ref={svg => svg && drawDiagram(svg, dataPoints)} />
             <figcaption>{caption}</figcaption>
         </figure>
     );

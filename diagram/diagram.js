@@ -11,7 +11,9 @@ const createElement = (elementName, additionalAttributes) => {
     return element;
 };
 
-export const drawDiagram = values => svg => {
+export const drawDiagram = (svg, values) => {
+
+    clear(svg);
 
     const w = svg.scrollWidth;
     const h = svg.scrollHeight;
@@ -25,6 +27,12 @@ export const drawDiagram = values => svg => {
     drawHorizontalDivisionLines(dimensions, svg);
     drawVerticalDivisionLines(dimensions, svg);
     drawValues(dimensions, svg, values);
+};
+
+const clear = svg => {
+    while (svg.firstChild) {
+        svg.removeChild(svg.firstChild);
+    }
 };
 
 const drawInnerHorizontalGridLines = (d, svg) => {

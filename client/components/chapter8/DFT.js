@@ -16,29 +16,29 @@ const DFT = () => {
     return (
         <div>
             <div className="row">
-                <DataPoints dataPoints={x} caption="x [ ]" />
+                <DataPoints dataPoints={x} caption="x[n]" />
             </div>
             <div className="row">
-                <DataPoints dataPoints={ReX} caption="ReX [ ]" />
+                <DataPoints dataPoints={ReX} caption="ReX[n]" />
             </div>
             <div className="row">
-                <DataPoints dataPoints={ImX} caption="ImX [ ]" />
+                <DataPoints dataPoints={ImX} caption="ImX[n]" />
             </div>
             <div className="row">
-                <DataPoints dataPoints={x2} caption="x2 [ ]" />
+                <DataPoints dataPoints={x2} caption="x2[n]" />
             </div>
 
             <div className="row">
-                <Diagram dataPoints={x} caption="x [ ]" />
+                <Diagram dataPoints={x} caption="x[n]" />
             </div>
             <div className="row">
-                <Diagram dataPoints={ReX} caption="ReX [ ]" />
+                <Diagram dataPoints={ReX} caption="ReX[n]" />
             </div>
             <div className="row">
-                <Diagram dataPoints={ImX} caption="ImX [ ]" />
+                <Diagram dataPoints={ImX} caption="ImX[n]" />
             </div>
             <div className="row">
-                <Diagram dataPoints={x2} caption="x2 [ ]" />
+                <Diagram dataPoints={x2} caption="x2[n]" />
             </div>
         </div>
     );

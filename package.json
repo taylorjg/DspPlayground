@@ -1,6 +1,6 @@
 {
   "name": "dsp-playground",
-  "version": "0.0.1-react",
+  "version": "0.0.3",
   "description": "Playing around with DSP",
   "repository": {
     "type": "git",
