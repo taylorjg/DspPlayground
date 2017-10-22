@@ -20,6 +20,7 @@ module.exports = {
         ]),
         new HtmlWebpackPlugin({
             template: './client/index.html',
+            inject: false,
             version: packageJson.version
         })
     ],
@@ -34,6 +35,7 @@ module.exports = {
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: serverPublic
+        contentBase: serverPublic,
+        historyApiFallback: true
     }
 };

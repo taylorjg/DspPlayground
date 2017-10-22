@@ -22,7 +22,7 @@ const Menu = () => {
                     <Link to="/dft">DFT</Link>
                 </li>
             </ul>
-            <li>Unknown</li>
+            <li>Miscellaneous</li>
             <ul>
                 <li>
                     <Link to="/misc/addingSineWaves">Adding Sine Waves</Link>
