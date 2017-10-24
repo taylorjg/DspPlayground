@@ -1,7 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { demosMenuData } from '../demosMenuData';
 
 const Menu = () => {
+
+    const populateDemosDropdownMenu = () =>
+        demosMenuData.map((section, sectionIndex) => {
+            return <li className="dropdown dropdown-submenu" key={sectionIndex}>
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                    {section.label}
+                </a>
+                <ul className="dropdown-menu">
+                    {
+                        section.items.map((item, itemIndex) => {
+                            return <li key={itemIndex}>
+                                <Link to={item.link}>{item.label}</Link>
+                            </li>
+                        })
+                    }
+                </ul>
+            </li>
+        })
+
     return (
         <nav className="navbar navbar-inverse">
             <div className="container-fluid">
@@ -23,46 +43,7 @@ const Menu = () => {
                                 Demos <span className="caret"></span>
                             </a>
                             <ul className="dropdown-menu">
-                                <li className="dropdown dropdown-submenu">
-                                    <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                                        Chapter 6
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            <Link to="/convolution/demo/1">Convolution (example from p. 112)</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/convolution/demo/2">Convolution (sine wave 2hz and low pass filter similar to 14-5b)</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/convolution/demo/3">Convolution (sine wave 2hz and high pass filter similar to 14-7d)</Link>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li className="dropdown dropdown-submenu">
-                                    <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                                        Chapter 8
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            <Link to="/dft">DFT</Link>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li role="separator" className="divider"></li>
-
-                                <li className="dropdown dropdown-submenu">
-                                    <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                                        Miscellaneous
-                                    </a>
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            <Link to="/misc/addingSineWaves">Adding Sine Waves</Link>
-                                        </li>
-                                    </ul>
-                                </li>
+                                {populateDemosDropdownMenu()}
                             </ul>
                         </li>
                     </ul>
