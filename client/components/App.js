@@ -11,15 +11,32 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: false
+            showModal: false,
+            data: {
+                firstName: ''
+            }
         };
-        this.open = this.open.bind(this);
-        this.close = this.close.bind(this);
+        this.onOpenModal = this.onOpenModal.bind(this);
+        this.onConfirm = this.onConfirm.bind(this);
+        this.onCancel = this.onCancel.bind(this);
     }
-    open() {
-        this.setState({ showModal: true });
+    onOpenModal() {
+        this.setState({
+            showModal: true,
+            data: {
+                firstName: this.state.data.firstName
+            }
+        });
     }
-    close() {
+    onConfirm(data) {
+        this.setState({
+            showModal: false,
+            data: {
+                firstName: data.firstName
+            }
+         });
+    }
+    onCancel() {
         this.setState({ showModal: false });
     }
     render() {
@@ -29,10 +46,14 @@ class App extends Component {
                     <Button
                         bsStyle="primary"
                         bsSize="small"
-                        onClick={this.open}
+                        onClick={this.onOpenModal}
                     >Open Modal
                     </Button>
-                    <SimpleModal showModal={this.state.showModal} onClose={this.close} />
+                    <SimpleModal
+                        showModal={this.state.showModal}
+                        data={this.state.data}
+                        onConfirm={this.onConfirm}
+                        onCancel={this.onCancel} />
                     <Menu />
                     <Route path="/convolution/demo/:id" component={Convolution} />
                     <Route path="/dft" component={DFT} />
@@ -41,6 +62,6 @@ class App extends Component {
             </Router>
         );
     }
-};
+}
 
 export default App;

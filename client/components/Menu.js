@@ -15,12 +15,12 @@ const Menu = () => {
                         section.items.map((item, itemIndex) => {
                             return <li key={itemIndex}>
                                 <Link to={item.link}>{item.label}</Link>
-                            </li>
+                            </li>;
                         })
                     }
                 </ul>
-            </li>
-        })
+            </li>;
+        });
 
     return (
         <nav className="navbar navbar-inverse">
