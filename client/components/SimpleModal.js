@@ -6,16 +6,18 @@ class SimpleModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: ''
+            simpleData: props.simpleData
         };
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     }
-    handleFirstNameChange(e) {
-        this.setState({ firstName: e.target.value });
-    }
     componentWillReceiveProps(nextProps) {
         this.setState({
-            firstName: nextProps.data.firstName
+            simpleData: nextProps.simpleData
+        });
+    }
+    handleFirstNameChange(e) {
+        this.setState({
+            simpleData: this.state.simpleData.set('firstName', e.target.value)
         });
     }
     render() {
@@ -30,7 +32,7 @@ class SimpleModal extends Component {
                             <ControlLabel>First name:</ControlLabel>
                             <FormControl
                                 type="text"
-                                value={this.state.firstName}
+                                value={this.state.simpleData.firstName}
                                 onChange={this.handleFirstNameChange}
                             />
                         </FormGroup>
@@ -42,9 +44,7 @@ class SimpleModal extends Component {
                             bsSize="small"
                             onClick={e => {
                                 e.preventDefault();
-                                this.props.onConfirm({
-                                    firstName: this.state.firstName
-                                });
+                                this.props.onConfirm(this.state.simpleData);
                             }}
                         >OK
                     </Button>
@@ -63,7 +63,7 @@ class SimpleModal extends Component {
 
 SimpleModal.propTypes = {
     showModal: PropTypes.bool.isRequired,
-    data: PropTypes.object.isRequired,
+    simpleData: PropTypes.object.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
 };

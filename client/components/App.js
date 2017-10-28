@@ -6,15 +6,14 @@ import Convolution from './chapter6/Convolution';
 import DFT from './chapter8/DFT';
 import AddingSineWaves from './misc/AddingSineWaves';
 import SimpleModal from './SimpleModal';
+import { SimpleData } from './SimpleData';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showModal: false,
-            data: {
-                firstName: ''
-            }
+            simpleData: new SimpleData()
         };
         this.onOpenModal = this.onOpenModal.bind(this);
         this.onConfirm = this.onConfirm.bind(this);
@@ -22,22 +21,19 @@ class App extends Component {
     }
     onOpenModal() {
         this.setState({
-            showModal: true,
-            data: {
-                firstName: this.state.data.firstName
-            }
+            showModal: true
         });
     }
-    onConfirm(data) {
+    onConfirm(simpleData) {
         this.setState({
             showModal: false,
-            data: {
-                firstName: data.firstName
-            }
+            simpleData
          });
     }
     onCancel() {
-        this.setState({ showModal: false });
+        this.setState({
+            showModal: false
+        });
     }
     render() {
         return (
@@ -51,7 +47,7 @@ class App extends Component {
                     </Button>
                     <SimpleModal
                         showModal={this.state.showModal}
-                        data={this.state.data}
+                        simpleData={this.state.simpleData}
                         onConfirm={this.onConfirm}
                         onCancel={this.onCancel} />
                     <Menu />
