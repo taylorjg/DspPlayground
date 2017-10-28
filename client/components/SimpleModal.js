@@ -8,16 +8,28 @@ class SimpleModal extends Component {
         this.state = {
             simpleData: props.simpleData
         };
+        this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
+        this.handleLastNameChange = this.handleLastNameChange.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
             simpleData: nextProps.simpleData
         });
     }
+    handleTitleChange(e) {
+        this.setState({
+            simpleData: this.state.simpleData.set('title', e.target.value)
+        });
+    }
     handleFirstNameChange(e) {
         this.setState({
             simpleData: this.state.simpleData.set('firstName', e.target.value)
+        });
+    }
+    handleLastNameChange(e) {
+        this.setState({
+            simpleData: this.state.simpleData.set('lastName', e.target.value)
         });
     }
     render() {
@@ -28,12 +40,33 @@ class SimpleModal extends Component {
                 </Modal.Header>
                 <form>
                     <Modal.Body>
+                        <FormGroup controlId="title">
+                            <ControlLabel>Title:</ControlLabel>
+                            <FormControl
+                                componentClass="select"
+                                value={this.state.simpleData.title}
+                                onChange={this.handleTitleChange}>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Dr.">Dr.</option>
+                                <option value="Rev.">Rev.</option>
+                            </FormControl>
+                        </FormGroup>
                         <FormGroup controlId="firstName">
                             <ControlLabel>First name:</ControlLabel>
                             <FormControl
                                 type="text"
                                 value={this.state.simpleData.firstName}
                                 onChange={this.handleFirstNameChange}
+                            />
+                        </FormGroup>
+                        <FormGroup controlId="lastName">
+                            <ControlLabel>Last name:</ControlLabel>
+                            <FormControl
+                                type="text"
+                                value={this.state.simpleData.lastName}
+                                onChange={this.handleLastNameChange}
                             />
                         </FormGroup>
                     </Modal.Body>
