@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import * as Title from './Title';
 
 class SimpleModal extends Component {
     constructor(props) {
@@ -36,11 +37,11 @@ class SimpleModal extends Component {
                                 componentClass="select"
                                 value={this.state.simpleData.title}
                                 onChange={this.makeHandler('title')}>
-                                <option value="Mr.">Mr.</option>
-                                <option value="Ms.">Ms.</option>
-                                <option value="Mrs.">Mrs.</option>
-                                <option value="Dr.">Dr.</option>
-                                <option value="Rev.">Rev.</option>
+                                <option value={Title.MR}>{Title.MR}</option>
+                                <option value={Title.MS}>{Title.MS}</option>
+                                <option value={Title.MRS}>{Title.MRS}</option>
+                                <option value={Title.DR}>{Title.DR}</option>
+                                <option value={Title.REV}>{Title.REV}</option>
                             </FormControl>
                         </FormGroup>
                         <FormGroup controlId="firstName">
