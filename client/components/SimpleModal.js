@@ -37,11 +37,11 @@ class SimpleModal extends Component {
                                 componentClass="select"
                                 value={this.state.simpleData.title}
                                 onChange={this.makeHandler('title')}>
-                                <option value={Title.MR}>{Title.MR}</option>
-                                <option value={Title.MS}>{Title.MS}</option>
-                                <option value={Title.MRS}>{Title.MRS}</option>
-                                <option value={Title.DR}>{Title.DR}</option>
-                                <option value={Title.REV}>{Title.REV}</option>
+                                {
+                                    Object.values(Title).map((title, index) =>
+                                        <option key={index} value={title}>{title}</option>
+                                    )
+                                }
                             </FormControl>
                         </FormGroup>
                         <FormGroup controlId="firstName">
