@@ -8,29 +8,19 @@ class SimpleModal extends Component {
         this.state = {
             simpleData: props.simpleData
         };
-        this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-        this.handleLastNameChange = this.handleLastNameChange.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
             simpleData: nextProps.simpleData
         });
     }
-    handleTitleChange(e) {
-        this.setState({
-            simpleData: this.state.simpleData.set('title', e.target.value)
-        });
-    }
-    handleFirstNameChange(e) {
-        this.setState({
-            simpleData: this.state.simpleData.set('firstName', e.target.value)
-        });
-    }
-    handleLastNameChange(e) {
-        this.setState({
-            simpleData: this.state.simpleData.set('lastName', e.target.value)
-        });
+    makeHandler(fieldName) {
+        const handler = e => {
+            this.setState({
+                simpleData: this.state.simpleData.set(fieldName, e.target.value)
+            });
+        };
+        return handler.bind(this);
     }
     render() {
         return (
@@ -45,7 +35,7 @@ class SimpleModal extends Component {
                             <FormControl
                                 componentClass="select"
                                 value={this.state.simpleData.title}
-                                onChange={this.handleTitleChange}>
+                                onChange={this.makeHandler('title')}>
                                 <option value="Mr.">Mr.</option>
                                 <option value="Ms.">Ms.</option>
                                 <option value="Mrs.">Mrs.</option>
@@ -58,7 +48,7 @@ class SimpleModal extends Component {
                             <FormControl
                                 type="text"
                                 value={this.state.simpleData.firstName}
-                                onChange={this.handleFirstNameChange}
+                                onChange={this.makeHandler('firstName')}
                             />
                         </FormGroup>
                         <FormGroup controlId="lastName">
@@ -66,7 +56,7 @@ class SimpleModal extends Component {
                             <FormControl
                                 type="text"
                                 value={this.state.simpleData.lastName}
-                                onChange={this.handleLastNameChange}
+                                onChange={this.makeHandler('lastName')}
                             />
                         </FormGroup>
                     </Modal.Body>
