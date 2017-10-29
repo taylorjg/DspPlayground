@@ -1,45 +1,45 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Menu from './Menu';
 import Convolution from './chapter6/Convolution';
 import DFT from './chapter8/DFT';
 import AddingSineWaves from './misc/AddingSineWaves';
-import SimpleModal from './SimpleModal';
-import { SimpleData } from './SimpleData';
+// import SimpleModal from './SimpleModal';
+// import { SimpleData } from './SimpleData';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            showModal: false,
-            simpleData: new SimpleData()
-        };
-        this.onOpenModal = this.onOpenModal.bind(this);
-        this.onConfirm = this.onConfirm.bind(this);
-        this.onCancel = this.onCancel.bind(this);
+        // this.state = {
+        //     showModal: false,
+        //     simpleData: new SimpleData()
+        // };
+        // this.onOpenModal = this.onOpenModal.bind(this);
+        // this.onConfirm = this.onConfirm.bind(this);
+        // this.onCancel = this.onCancel.bind(this);
     }
-    onOpenModal() {
-        this.setState({
-            showModal: true
-        });
-    }
-    onConfirm(simpleData) {
-        this.setState({
-            showModal: false,
-            simpleData
-         });
-    }
-    onCancel() {
-        this.setState({
-            showModal: false
-        });
-    }
+    // onOpenModal() {
+    //     this.setState({
+    //         showModal: true
+    //     });
+    // }
+    // onConfirm(simpleData) {
+    //     this.setState({
+    //         showModal: false,
+    //         simpleData
+    //      });
+    // }
+    // onCancel() {
+    //     this.setState({
+    //         showModal: false
+    //     });
+    // }
     render() {
         return (
             <Router>
                 <div>
-                    <Button
+                    {/* <Button
                         bsStyle="primary"
                         bsSize="small"
                         onClick={this.onOpenModal}
@@ -49,7 +49,7 @@ class App extends Component {
                         showModal={this.state.showModal}
                         simpleData={this.state.simpleData}
                         onConfirm={this.onConfirm}
-                        onCancel={this.onCancel} />
+                        onCancel={this.onCancel} /> */}
                     <Menu />
                     <Route path="/convolution/demo/:id" component={Convolution} />
                     <Route path="/dft" component={DFT} />
