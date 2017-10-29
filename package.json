@@ -1,6 +1,6 @@
 {
   "name": "dsp-playground",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Playing around with DSP",
   "repository": {
     "type": "git",
@@ -12,7 +12,8 @@
     "url": "https://github.com/taylorjg/DspPlayground/issues"
   },
   "scripts": {
-    "start": "node server/app.js"
+    "start": "node server/app.js",
+    "heroku-postbuild": "npm install --dev && webpack"
   },
   "homepage": "https://github.com/taylorjg/DspPlayground#readme",
   "devDependencies": {
