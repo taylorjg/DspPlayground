@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/taylorjg/DspPlayground.svg?style=svg)](https://circleci.com/gh/taylorjg/DspPlayground)
+
 ## Description
 
 I am currently reading
