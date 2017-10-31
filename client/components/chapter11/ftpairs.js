@@ -22,7 +22,9 @@ const FTPairs = route => {
 
     const id = Number(route.match.params.id);
     const x = selectInputSignal(id);
-    const { ReX, ImX } = dft(x);
+    const { ReX: ReXsingle, ImX: ImXsingle } = dft(x);
+    const ReX = ReXsingle.concat(ReXsingle.slice(1));
+    const ImX = ImXsingle.concat(ImXsingle.slice(1));
     const { MagX, PhaseX } = rectToPolar(ReX, ImX);
     
     return (
@@ -62,20 +64,20 @@ const FTPairs = route => {
                     ? (
                         <div>
                             <div className="row">
-                                <Diagram dataPoints={MagX} caption="MagX[n]" />
+                                <Diagram dataPoints={MagX} joinPoints={true} caption="MagX[n]" />
                             </div>
                             <div className="row">
-                                <Diagram dataPoints={PhaseX} caption="PhaseX[n]" />
+                                <Diagram dataPoints={PhaseX} joinPoints={true} caption="PhaseX[n]" />
                             </div>
                         </div>
                     )
                     : (
                         <div>
                             <div className="row">
-                                <Diagram dataPoints={ReX} caption="ReX[n]" />
+                                <Diagram dataPoints={ReX} joinPoints={true} caption="ReX[n]" />
                             </div>
                             <div className="row">
-                                <Diagram dataPoints={ImX} caption="ImX[n]" />
+                                <Diagram dataPoints={ImX} joinPoints={true} caption="ImX[n]" />
                             </div>
                         </div>
                     )

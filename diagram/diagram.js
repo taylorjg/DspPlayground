@@ -11,7 +11,7 @@ const createElement = (elementName, additionalAttributes) => {
     return element;
 };
 
-export const drawDiagram = (svg, values) => {
+export const drawDiagram = (svg, values, joinPoints = false) => {
 
     clear(svg);
 
@@ -26,7 +26,7 @@ export const drawDiagram = (svg, values) => {
     drawOuterRect(dimensions, svg);
     drawHorizontalDivisionLines(dimensions, svg);
     drawVerticalDivisionLines(dimensions, svg);
-    drawValues(dimensions, svg, values);
+    drawValues(dimensions, svg, values, joinPoints);
 };
 
 const clear = svg => {
@@ -102,7 +102,7 @@ const drawVerticalDivisionLines = (d, svg) => {
     });
 };
 
-const drawValues = (d, svg, values) => {
+const drawValues = (d, svg, values, joinPoints) => {
 
     const SQUARE_SIZE = d.aw / 128;
     const MIN_VALUE = Math.min(...values);
@@ -129,6 +129,29 @@ const drawValues = (d, svg, values) => {
         });
         svg.appendChild(rect);
     });
+
+    if (joinPoints) {
+        for (let i = 1; i < values.length; i++) {
+            const index1 = i - 1;
+            const index2 = i;
+            const value1 = values[index1];
+            const value2 = values[index2];
+            const x1 = MARGIN + d.aw / numDivisions * index1;
+            const x2 = MARGIN + d.aw / numDivisions * index2;
+            const dy1 = (value1 - MID_VALUE) * STEP;
+            const dy2 = (value2 - MID_VALUE) * STEP;
+            const y1 = MID_Y - dy1;
+            const y2 = MID_Y - dy2;
+            const line = createElement('line', {
+                x1,
+                y1,
+                x2,
+                y2,
+                'class': 'diagram-value-line'
+            });
+            svg.appendChild(line);
+        }
+    }
 
     drawHorizontalAxisLabels(d, svg, values);
     drawVerticalAxisLabels(d, svg, values, RANGE, STEP);

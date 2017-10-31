@@ -57,6 +57,11 @@ svg {
     fill: black;
 }
 
+.diagram-value-line {
+    stroke: black;
+    stroke-width: 1;
+}
+
 figcaption {
     text-align: center;
     width: 700px;
