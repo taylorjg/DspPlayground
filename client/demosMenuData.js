@@ -1,6 +1,6 @@
 export const demosMenuData = [
     {
-        label: 'Chapter 6',
+        label: 'Chapter 6: Convolution',
         items: [
             {
                 link: '/convolution/demo/1',
@@ -17,7 +17,7 @@ export const demosMenuData = [
         ]
     },
     {
-        label: 'Chapter 7',
+        label: 'Chapter 7: Properties of Convolution',
         items: [
             {
                 link: '/correlation',
@@ -26,7 +26,7 @@ export const demosMenuData = [
         ]
     },
     {
-        label: 'Chapter 8',
+        label: 'Chapter 8: The Discrete Fourier Transform',
         items: [
             {
                 link: '/dft/demo/1',
@@ -35,6 +35,35 @@ export const demosMenuData = [
             {
                 link: '/dft/demo/2',
                 label: 'DFT (polar)'
+            }
+        ]
+    },
+    {
+        label: 'Chapter 11: Fourier Transform Pairs',
+        items: [
+            {
+                link: '/ftpairs/demo/1',
+                label: 'Delta function pair, impulse at x[0] (polar)'
+            },
+            {
+                link: '/ftpairs/demo/2',
+                label: 'Delta function pair, impulse at x[4] (polar)'
+            },
+            {
+                link: '/ftpairs/demo/3',
+                label: 'Delta function pair, impulse at x[8] (polar)'
+            },
+            {
+                link: '/ftpairs/demo/4',
+                label: 'Delta function pair, impulse at x[0] (rect)'
+            },
+            {
+                link: '/ftpairs/demo/5',
+                label: 'Delta function pair, impulse at x[4] (rect)'
+            },
+            {
+                link: '/ftpairs/demo/6',
+                label: 'Delta function pair, impulse at x[8] (rect)'
             }
         ]
     },

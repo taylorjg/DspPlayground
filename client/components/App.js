@@ -5,6 +5,7 @@ import Menu from './Menu';
 import Convolution from './chapter6/Convolution';
 import Correlation from './chapter7/Correlation';
 import DFT from './chapter8/DFT';
+import FTPairs from './chapter11/ftpairs';
 import AddingSineWaves from './misc/AddingSineWaves';
 // import SimpleModal from './SimpleModal';
 // import { SimpleData } from './SimpleData';
@@ -55,6 +56,7 @@ class App extends Component {
                     <Route path="/convolution/demo/:id" component={Convolution} />
                     <Route path="/correlation" component={Correlation} />
                     <Route path="/dft/demo/:id" component={DFT} />
+                    <Route path="/ftpairs/demo/:id" component={FTPairs} />
                     <Route path="/misc/addingSineWaves" component={AddingSineWaves} />
                 </div>
             </Router>
