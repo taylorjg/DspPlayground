@@ -29,8 +29,12 @@ export const demosMenuData = [
         label: 'Chapter 8',
         items: [
             {
-                link: '/dft',
-                label: 'DFT'
+                link: '/dft/demo/1',
+                label: 'DFT (rect)'
+            },
+            {
+                link: '/dft/demo/2',
+                label: 'DFT (polar)'
             }
         ]
     },

@@ -54,7 +54,7 @@ class App extends Component {
                     <Menu />
                     <Route path="/convolution/demo/:id" component={Convolution} />
                     <Route path="/correlation" component={Correlation} />
-                    <Route path="/dft" component={DFT} />
+                    <Route path="/dft/demo/:id" component={DFT} />
                     <Route path="/misc/addingSineWaves" component={AddingSineWaves} />
                 </div>
             </Router>
