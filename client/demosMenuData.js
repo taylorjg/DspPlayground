@@ -17,6 +17,15 @@ export const demosMenuData = [
         ]
     },
     {
+        label: 'Chapter 7',
+        items: [
+            {
+                link: '/correlation',
+                label: 'Correlation'
+            }
+        ]
+    },
+    {
         label: 'Chapter 8',
         items: [
             {
