@@ -54,7 +54,7 @@ class App extends Component {
                         onCancel={this.onCancel} /> */}
                     <Menu />
                     <Route path="/convolution/demo/:id" component={Convolution} />
-                    <Route path="/correlation" component={Correlation} />
+                    <Route path="/correlation/demo/:id" component={Correlation} />
                     <Route path="/dft/demo/:id" component={DFT} />
                     <Route path="/ftpairs/demo/:id" component={FTPairs} />
                     <Route path="/misc/addingSineWaves" component={AddingSineWaves} />

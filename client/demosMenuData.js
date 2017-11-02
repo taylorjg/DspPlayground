@@ -8,11 +8,11 @@ export const demosMenuData = [
             },
             {
                 link: '/convolution/demo/2',
-                label: 'Convolution (sine wave 2hz and low pass filter similar to 14-5b)'
+                label: 'Convolution (sine wave 2Hz and low pass filter similar to 14-5b)'
             },
             {
                 link: '/convolution/demo/3',
-                label: 'Convolution (sine wave 2hz and high pass filter similar to 14-7d)'
+                label: 'Convolution (sine wave 2Hz and high pass filter similar to 14-7d)'
             }
         ]
     },
@@ -20,8 +20,12 @@ export const demosMenuData = [
         label: 'Chapter 7: Properties of Convolution',
         items: [
             {
-                link: '/correlation',
-                label: 'Correlation'
+                link: '/correlation/demo/1',
+                label: 'Correlation (2Hz + 8Hz correlated with 2Hz)'
+            },
+            {
+                link: '/correlation/demo/2',
+                label: 'Correlation (2Hz + 8Hz correlated with 8Hz)'
             }
         ]
     },
@@ -72,7 +76,7 @@ export const demosMenuData = [
         items: [
             {
                 link: '/misc/addingSineWaves',
-                label: 'Adding Sine Waves'
+                label: 'Adding Sine Waves (2Hz + 8Hz)'
             }
         ]
     }
