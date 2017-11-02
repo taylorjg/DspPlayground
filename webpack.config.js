@@ -8,7 +8,9 @@ const packageJson = require('./package.json');
 const serverPublic = path.join(__dirname, 'server', 'public');
 
 module.exports = {
-    entry: './client/index.js',
+    entry: [
+        'babel-polyfill',
+        './client/index.js'],
     output: {
         path: serverPublic,
         filename: 'bundle.js'

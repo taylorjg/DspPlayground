@@ -1,6 +1,6 @@
 {
   "name": "dsp-playground",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Playing around with DSP",
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
