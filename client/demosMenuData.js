@@ -72,6 +72,15 @@ export const demosMenuData = [
         ]
     },
     {
+        label: 'Chapter 12: The Fast Fourier Transform',
+        items: [
+            {
+                link: '/fft',
+                label: 'FFT'
+            }
+        ]
+    },
+    {
         label: 'Miscellaneous',
         items: [
             {

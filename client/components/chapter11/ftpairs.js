@@ -3,6 +3,7 @@ import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
 import { dft, rectToPolar } from '../../../dsp';
 
+// See pages 210-211.
 const selectInputSignal = id => {
     switch (id) {
         case 2:
