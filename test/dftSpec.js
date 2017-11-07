@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import { dft, inverseDft } from '../dsp';
 import sineWave2Hz from '../InputSignals/sine_2_128_128.json';
 
-describe('DFT tests', () => {
+describe('dft tests', () => {
 
     const TOLERANCE = 1e-12;
 
-    it('DFT round trip', () => {
+    it('dft round trip', () => {
         const x1 = sineWave2Hz.x;
         const { ReX, ImX } = dft(x1);
         const x2 = inverseDft(ReX, ImX);
