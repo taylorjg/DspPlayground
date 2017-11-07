@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { dft, fft } from '../dsp';
+import { dft, fft, fft2, inverseFft } from '../dsp';
 import sineWave2Hz from '../InputSignals/sine_2_128_128.json';
 
 describe('FFT tests', () => {
@@ -15,6 +15,19 @@ describe('FFT tests', () => {
         for (let k = 0; k <= nd2; k++) {
             expect(ReX1[k]).to.be.closeTo(ReX2[k], TOLERANCE);
             expect(ImX1[k]).to.be.closeTo(ImX2[k], TOLERANCE);
+        }
+    });
+
+    it('FFT round trip', () => {
+        const x = sineWave2Hz.x;
+        const n = x.length;
+        const TReX1 = x;
+        const TImX1 = Array(n).fill(0);
+        const { ReX: FReX, ImX: FImX } = fft2(TReX1, TImX1);
+        const { ReX: TReX2, ImX: TImX2 } = inverseFft(FReX, FImX);
+        for (let k = 0; k < n; k++) {
+            expect(TReX1[k]).to.be.closeTo(TReX2[k], TOLERANCE);
+            expect(TImX1[k]).to.be.closeTo(TImX2[k], TOLERANCE);
         }
     });
 });

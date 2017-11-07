@@ -1,19 +1,43 @@
-export const fft = x => {
+// TABLE 12-7 p. 242
+export const realFft = x => {
 
-    const n = x.length;
-    const ReX = x.slice();
-    const ImX = Array(n).fill(0);
+    // TODO: even/odd optimisation. For now, keep it simple.
+    return fft(x, x.map(() => 0));
+
+    //     const n = x.length;
+    //     const nh = n / 2;
+    //     const evens = Array(nh);
+    //     const odds = Array(nh);
+    //     for (let i = 0; i < nh; i++) {
+    //         const ii = 2 * i;
+    //         evens[i] = x[ii];
+    //         odds[i] = x[ii + 1];
+    //     }
+    //     const ReX = Array(n);
+    //     const ImX = Array(n);
+    //     return { ReX, ImX };
+};
+
+// TABLE 12-4 p. 235
+export const fft = (TReX, TImX) => {
+
+    const n = TReX.length;
+    const ReX = TReX.slice();
+    const ImX = TImX.slice();
 
     const nm1 = n - 1;
     const nd2 = n / 2;
-    const m = Math.floor(Math.log2(n) / Math.log2(2));
+    const m = Math.floor(Math.log2(n));
     let j = nd2;
 
     for (let i = 1; i <= n - 2; i++) {
         if (i < j) {
-            const temp = ReX[j];
+            const temp1 = ReX[j];
             ReX[j] = ReX[i];
-            ReX[i] = temp;
+            ReX[i] = temp1;
+            const temp2 = ImX[j];
+            ImX[j] = ImX[i];
+            ImX[i] = temp2;
         }
         let k = nd2;
         while (k <= j) {
@@ -50,17 +74,12 @@ export const fft = x => {
     return { ReX, ImX };
 };
 
-// export const realFft = x => {
-//     const n = x.length;
-//     const nh = n / 2;
-//     const evens = Array(nh);
-//     const odds = Array(nh);
-//     for (let i = 0; i < nh; i++) {
-//         const ii = 2 * i;
-//         evens[i] = x[ii];
-//         odds[i] = x[ii + 1];
-//     }
-//     const ReX = Array(n);
-//     const ImX = Array(n);
-//     return { ReX, ImX };
-// };
+// TABLE 12-5 p. 236
+export const inverseFft = (FReX, FImX) => {
+    const n = FReX.length;
+    const { ReX: a, ImX: b } = fft(FReX, FImX.map(v => -v));
+    return {
+        ReX: a.map(v => v/n),
+        ImX: b.map(v => -v/n)
+    };
+};

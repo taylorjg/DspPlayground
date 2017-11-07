@@ -8,11 +8,11 @@ export const demosMenuData = [
             },
             {
                 link: '/convolution/demo/2',
-                label: 'Convolution (sine wave 2Hz and low pass filter similar to 14-5b)'
+                label: 'Convolution (sine wave 2 Hz and low pass filter similar to 14-5b)'
             },
             {
                 link: '/convolution/demo/3',
-                label: 'Convolution (sine wave 2Hz and high pass filter similar to 14-7d)'
+                label: 'Convolution (sine wave 2 Hz and high pass filter similar to 14-7d)'
             }
         ]
     },
@@ -21,11 +21,11 @@ export const demosMenuData = [
         items: [
             {
                 link: '/correlation/demo/1',
-                label: 'Correlation (2Hz + 8Hz correlated with 2Hz)'
+                label: 'Correlation (2 Hz + 8 Hz correlated with 2 Hz)'
             },
             {
                 link: '/correlation/demo/2',
-                label: 'Correlation (2Hz + 8Hz correlated with 8Hz)'
+                label: 'Correlation (2 Hz + 8 Hz correlated with 8 Hz)'
             }
         ]
     },
@@ -75,8 +75,16 @@ export const demosMenuData = [
         label: 'Chapter 12: The Fast Fourier Transform',
         items: [
             {
-                link: '/fft',
-                label: 'FFT'
+                link: '/fft/demo/1',
+                label: 'FFT (Figure 12-10)'
+            },
+            {
+                link: '/fft/demo/2',
+                label: 'FFT (Figure 12-11)'
+            },
+            {
+                link: '/realfft',
+                label: 'Real FFT'
             }
         ]
     },
@@ -85,7 +93,7 @@ export const demosMenuData = [
         items: [
             {
                 link: '/misc/addingSineWaves',
-                label: 'Adding Sine Waves (2Hz + 8Hz)'
+                label: 'Adding Sine Waves (2 Hz + 8 Hz)'
             }
         ]
     }

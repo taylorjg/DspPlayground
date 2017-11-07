@@ -6,7 +6,7 @@ describe('DFT tests', () => {
 
     const TOLERANCE = 1e-12;
 
-    it('x => DFT => inverse DFT => x', () => {
+    it('DFT round trip', () => {
         const x1 = sineWave2Hz.x;
         const { ReX, ImX } = dft(x1);
         const x2 = inverseDft(ReX, ImX);
