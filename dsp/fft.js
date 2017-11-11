@@ -1,8 +1,29 @@
+export const timeRealToComplex = x => ({
+    TReXcomplex: x,
+    TImXcomplex: x.map(() => 0)
+});
+
+export const frequencyRealToComplex = (FReXreal, FImXreal) => {
+    const l = FReXreal.length;
+    const n = (l - 1) * 2;
+    const FReXcomplex = FReXreal.slice().concat(Array(n - l));
+    const FImXcomplex = FImXreal.slice().concat(Array(n - l));
+    for (let k = l; k < n; k++) {
+        FReXcomplex[k] = FReXreal[n - k];
+        FImXcomplex[k] = -FImXreal[n - k];
+    }
+    return {
+        FReXcomplex,
+        FImXcomplex
+    };
+};
+
 // TABLE 12-7 p. 242
 export const realFft = x => {
 
-    // TODO: even/odd optimisation. For now, keep it simple.
-    return fft(x, x.map(() => 0));
+    // TODO: implement the even/odd optimisation.
+    const { TReXcomplex, TImXcomplex } = timeRealToComplex(x);
+    return fft(TReXcomplex, TImXcomplex);
 
     //     const n = x.length;
     //     const nh = n / 2;
@@ -18,12 +39,22 @@ export const realFft = x => {
     //     return { ReX, ImX };
 };
 
-// TABLE 12-4 p. 235
-export const fft = (TReX, TImX) => {
+// TABLE 12-6 p. 239
+export const realInverseFft = (FReXreal, FImXreal) => {
+    const { FReXcomplex, FImXcomplex } = frequencyRealToComplex(FReXreal, FImXreal);
+    const sum = FReXcomplex.map((v, index) => v + FImXcomplex[index]);
+    const { outReXcomplex, outImXcomplex } = realFft(sum);
+    const n = outReXcomplex.length;
+    const x = outReXcomplex.map((v, index) => (v + outImXcomplex[index]) / n);
+    return { x, zeros: x.map(() => 0) };
+};
 
-    const n = TReX.length;
-    const ReX = TReX.slice();
-    const ImX = TImX.slice();
+// TABLE 12-4 p. 235
+export const fft = (inReXcomplex, inImXcomplex) => {
+
+    const n = inReXcomplex.length;
+    const reBuffer = inReXcomplex.slice();
+    const imBuffer = inImXcomplex.slice();
 
     const nm1 = n - 1;
     const nd2 = n / 2;
@@ -32,12 +63,12 @@ export const fft = (TReX, TImX) => {
 
     for (let i = 1; i <= n - 2; i++) {
         if (i < j) {
-            const temp1 = ReX[j];
-            ReX[j] = ReX[i];
-            ReX[i] = temp1;
-            const temp2 = ImX[j];
-            ImX[j] = ImX[i];
-            ImX[i] = temp2;
+            const temp1 = reBuffer[j];
+            reBuffer[j] = reBuffer[i];
+            reBuffer[i] = temp1;
+            const temp2 = imBuffer[j];
+            imBuffer[j] = imBuffer[i];
+            imBuffer[i] = temp2;
         }
         let k = nd2;
         while (k <= j) {
@@ -58,12 +89,12 @@ export const fft = (TReX, TImX) => {
             const jm1 = j - 1;
             for (let i = jm1; i <= nm1; i += le) {
                 const ip = i + le2;
-                const tr = ReX[ip] * ur - ImX[ip] * ui;
-                const ti = ReX[ip] * ui + ImX[ip] * ur;
-                ReX[ip] = ReX[i] - tr;
-                ImX[ip] = ImX[i] - ti;
-                ReX[i] += tr;
-                ImX[i] += ti;
+                const tr = reBuffer[ip] * ur - imBuffer[ip] * ui;
+                const ti = reBuffer[ip] * ui + imBuffer[ip] * ur;
+                reBuffer[ip] = reBuffer[i] - tr;
+                imBuffer[ip] = imBuffer[i] - ti;
+                reBuffer[i] += tr;
+                imBuffer[i] += ti;
             }
             const tr2 = ur;
             ur = tr2 * sr - ui * si;
@@ -71,15 +102,18 @@ export const fft = (TReX, TImX) => {
         }
     }
 
-    return { ReX, ImX };
+    return {
+        outReXcomplex: reBuffer,
+        outImXcomplex: imBuffer
+    };
 };
 
 // TABLE 12-5 p. 236
-export const inverseFft = (FReX, FImX) => {
-    const n = FReX.length;
-    const { ReX: a, ImX: b } = fft(FReX, FImX.map(v => -v));
+export const inverseFft = (FReXcomplex, FImXcomplex) => {
+    const { outReXcomplex: a, outImXcomplex: b } = fft(FReXcomplex, FImXcomplex.map(v => -v));
+    const n = FReXcomplex.length;
     return {
-        ReX: a.map(v => v/n),
-        ImX: b.map(v => -v/n)
+        TReXcomplex: a.map(v => v / n),
+        TImXcomplex: b.map(v => -v / n)
     };
 };

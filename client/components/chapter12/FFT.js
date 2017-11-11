@@ -6,59 +6,57 @@ import { fft, inverseFft } from '../../../dsp';
 const selectSignal = id => {
     const pulse = Array(6).fill(1).concat(Array(58).fill(0));
     const zeros = pulse.map(() => 0);
-    if (id === 1) {
-        return { ReX: pulse, ImX: zeros };
-    }
-    else {
-        return { ReX: zeros, ImX: pulse };
-    }
+    return {
+        TReXcomplex: id === 1 ? pulse : zeros,
+        TImXcomplex: id === 1 ? zeros : pulse
+    };
 };
 
 const FFT = route => {
 
     const id = Number(route.match.params.id);
-    const { ReX: TReX1, ImX: TImX1 } = selectSignal(id);
-    const { ReX: FReX, ImX: FImX } = fft(TReX1, TImX1);
-    const { ReX: TReX2, ImX: TImX2 } = inverseFft(FReX, FImX);
+    const { TReXcomplex: TReXcomplex1, TImXcomplex: TImXcomplex1 } = selectSignal(id);
+    const { outReXcomplex: FReXcomplex, outImXcomplex: FImXcomplex } = fft(TReXcomplex1, TImXcomplex1);
+    const { TReXcomplex: TReXcomplex2, TImXcomplex: TImXcomplex2 } = inverseFft(FReXcomplex, FImXcomplex);
 
     return (
         <div>
             <div className="row">
-                <DataPoints dataPoints={TReX1} caption="TReX1[n]" />
+                <DataPoints dataPoints={TReXcomplex1} caption="TReXcomplex1[n]" />
             </div>
             <div className="row">
-                <DataPoints dataPoints={TImX1} caption="TImX1[n]" />
+                <DataPoints dataPoints={TImXcomplex1} caption="TImXcomplex1[n]" />
             </div>
             <div className="row">
-                <DataPoints dataPoints={FReX} caption="FReX[n]" />
+                <DataPoints dataPoints={FReXcomplex} caption="FReXcomplex[n]" />
             </div>
             <div className="row">
-                <DataPoints dataPoints={FImX} caption="FImX[n]" />
+                <DataPoints dataPoints={FImXcomplex} caption="FImXcomplex[n]" />
             </div>
             <div className="row">
-                <DataPoints dataPoints={TReX2} caption="TReX2[n]" />
+                <DataPoints dataPoints={TReXcomplex2} caption="TReXcomplex2[n]" />
             </div>
             <div className="row">
-                <DataPoints dataPoints={TImX2} caption="TImX2[n]" />
+                <DataPoints dataPoints={TImXcomplex2} caption="TImXcomplex2[n]" />
             </div>
 
             <div className="row">
-                <Diagram dataPoints={TReX1} caption="TReX1[n]" joinPoints={true} />
+                <Diagram dataPoints={TReXcomplex1} caption="TReXcomplex1[n]" joinPoints={true} />
             </div>
             <div className="row">
-                <Diagram dataPoints={TImX1} caption="TImX1[n]" joinPoints={true} />
+                <Diagram dataPoints={TImXcomplex1} caption="TImXcomplex1[n]" joinPoints={true} />
             </div>
             <div className="row">
-                <Diagram dataPoints={FReX} caption="FReX[n]" joinPoints={true} />
+                <Diagram dataPoints={FReXcomplex} caption="FReXcomplex[n]" joinPoints={true} />
             </div>
             <div className="row">
-                <Diagram dataPoints={FImX} caption="FImX[n]" joinPoints={true} />
+                <Diagram dataPoints={FImXcomplex} caption="FImXcomplex[n]" joinPoints={true} />
             </div>
             <div className="row">
-                <Diagram dataPoints={TReX2} caption="TReX2[n]" joinPoints={true} />
+                <Diagram dataPoints={TReXcomplex2} caption="TReXcomplex2[n]" joinPoints={true} />
             </div>
             <div className="row">
-                <Diagram dataPoints={TImX2} caption="TImX2[n]" joinPoints={true} />
+                <Diagram dataPoints={TImXcomplex2} caption="TImXcomplex2[n]" joinPoints={true} />
             </div>
         </div>
     );
