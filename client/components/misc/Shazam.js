@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
-import { realFft } from '../../../dsp';
+import { realFft, rectToPolar } from '../../../dsp';
 
 const STATE_NOT_RECORDING = 0;
 const STATE_RECORDING = 1;
@@ -68,11 +68,14 @@ class Shazam extends Component {
                                 const signal = Array.from(float32Array.slice(from, to));
                                 console.log(`signal.length: ${signal.length}`);
                                 const { outReXcomplex: ReX, outImXcomplex: ImX } = realFft(signal);
+                                const { MagX, PhaseX } = rectToPolar(ReX, ImX);
                                 self.setState({
                                     currentState: STATE_RECORDED,
                                     signal,
                                     ReX,
-                                    ImX
+                                    ImX,
+                                    MagX,
+                                    PhaseX
                                 });
                             })
                             .catch(function (err) {
@@ -134,6 +137,12 @@ class Shazam extends Component {
                 <div className="row">
                     <DataPoints dataPoints={this.state.ImX} caption="ImX[n]" />
                 </div>
+                <div className="row">
+                    <DataPoints dataPoints={this.state.MagX} caption="MagX[n]" />
+                </div>
+                <div className="row">
+                    <DataPoints dataPoints={this.state.PhaseX} caption="PhaseX[n]" />
+                </div>
 
                 <div className="row">
                     <Diagram dataPoints={this.state.signal} caption="signal[n]" />
@@ -143,6 +152,12 @@ class Shazam extends Component {
                 </div>
                 <div className="row">
                     <Diagram dataPoints={this.state.ImX} caption="ImX[n]" />
+                </div>
+                <div className="row">
+                    <Diagram dataPoints={this.state.MagX} caption="MagX[n]" />
+                </div>
+                <div className="row">
+                    <Diagram dataPoints={this.state.PhaseX} caption="PhaseX[n]" />
                 </div>
             </div>
         );
