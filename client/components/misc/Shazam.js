@@ -15,6 +15,13 @@ class Shazam extends Component {
         };
         this.onRecord = this.onRecord.bind(this);
     }
+    componentWillMount() {
+        this.audioContext = new AudioContext();
+    }
+    componentWillUnmount() {
+        this.audioContext.close();
+        this.audioContext = null;
+    }
     record() {
         this.setState({
             currentState: STATE_RECORDING,
@@ -51,7 +58,7 @@ class Shazam extends Component {
                     const fileReader = new FileReader();
                     fileReader.onload = function () {
                         console.log('[fileReader => onload]');
-                        new AudioContext().decodeAudioData(this.result)
+                        self.audioContext.decodeAudioData(this.result)
                             .then(function (audioBuffer) {
                                 console.log(`[decodeAudioData => then] audioBuffer.sampleRate: ${audioBuffer.sampleRate}`);
                                 const float32Array = audioBuffer.getChannelData(0);
@@ -61,7 +68,6 @@ class Shazam extends Component {
                                 const signal = Array.from(float32Array.slice(from, to));
                                 console.log(`signal.length: ${signal.length}`);
                                 const { outReXcomplex: ReX, outImXcomplex: ImX } = realFft(signal);
-                                // const { ReX, ImX } = dft(signal);
                                 self.setState({
                                     currentState: STATE_RECORDED,
                                     signal,
