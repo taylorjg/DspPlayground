@@ -94,6 +94,10 @@ export const demosMenuData = [
             {
                 link: '/misc/addingSineWaves',
                 label: 'Adding Sine Waves (2 Hz + 8 Hz)'
+            },
+            {
+                link: '/misc/shazam',
+                label: 'Shazam'
             }
         ]
     }

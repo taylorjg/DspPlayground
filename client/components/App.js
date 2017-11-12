@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import { Button } from 'react-bootstrap';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Menu from './Menu';
 import Convolution from './chapter6/Convolution';
 import Correlation from './chapter7/Correlation';
@@ -9,51 +8,16 @@ import FTPairs from './chapter11/ftpairs';
 import FFT from './chapter12/FFT';
 import RealFFT from './chapter12/RealFFT';
 import AddingSineWaves from './misc/AddingSineWaves';
-// import SimpleModal from './SimpleModal';
-// import { SimpleData } from './SimpleData';
+import Shazam from './misc/Shazam';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //     showModal: false,
-        //     simpleData: new SimpleData()
-        // };
-        // this.onOpenModal = this.onOpenModal.bind(this);
-        // this.onConfirm = this.onConfirm.bind(this);
-        // this.onCancel = this.onCancel.bind(this);
     }
-    // onOpenModal() {
-    //     this.setState({
-    //         showModal: true
-    //     });
-    // }
-    // onConfirm(simpleData) {
-    //     this.setState({
-    //         showModal: false,
-    //         simpleData
-    //      });
-    // }
-    // onCancel() {
-    //     this.setState({
-    //         showModal: false
-    //     });
-    // }
     render() {
         return (
-            <Router>
+            <BrowserRouter>
                 <div>
-                    {/* <Button
-                        bsStyle="primary"
-                        bsSize="small"
-                        onClick={this.onOpenModal}
-                    >Open Modal
-                    </Button>
-                    <SimpleModal
-                        showModal={this.state.showModal}
-                        simpleData={this.state.simpleData}
-                        onConfirm={this.onConfirm}
-                        onCancel={this.onCancel} /> */}
                     <Menu />
                     <Route path="/convolution/demo/:id" component={Convolution} />
                     <Route path="/correlation/demo/:id" component={Correlation} />
@@ -62,10 +26,60 @@ class App extends Component {
                     <Route path="/fft/demo/:id" component={FFT} />
                     <Route path="/realfft" component={RealFFT} />
                     <Route path="/misc/addingSineWaves" component={AddingSineWaves} />
+                    <Route path="/misc/shazam" component={Shazam} />
                 </div>
-            </Router>
+            </BrowserRouter>
         );
     }
 }
+
+// navigator.mediaDevices.getUserMedia({ audio: true })
+//     .then(function (mediaStream) {
+//         const mediaRecorder = new MediaRecorder(mediaStream, {
+//             audioBitsPerSecond: 44100
+//         });
+//         const chunks = [];
+//         mediaRecorder.ondataavailable = function (e) {
+//             console.log('[ondataavailable]');
+//             chunks.push(e.data);
+//         };
+//         mediaRecorder.onstop = function () {
+//             const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+//             const fileReader = new FileReader();
+//             fileReader.onload = function() {
+//                 console.log('[fileReader onload]');
+//                 new AudioContext().decodeAudioData(this.result)
+//                 .then(buffer => {
+//                     console.log('[AudioContext.decodeAudioData then]');
+//                     console.dir(buffer);
+//                     const numberOfChannels = buffer.numberOfChannels;
+//                     console.log(`numberOfChannels: ${numberOfChannels}`);
+//                     const float32Array = buffer.getChannelData(0);
+//                     console.log(`float32Array.length: ${float32Array.length}`);
+//                     let min = Number.MAX_VALUE;
+//                     let max = Number.MIN_VALUE;
+//                     for (let i = 0; i < float32Array.length; i++) {
+//                         const v = float32Array[i];
+//                         min = v < min ? v : min;
+//                         max = v > max ? v : max;
+//                     }
+//                     console.log(`min: ${min}; max: ${max}`);
+//                 })
+//                 .catch(function(err) {
+//                     console.log(`[AudioContext.decodeAudioData catch] err: ${err}`);
+//                 });
+//             };
+//             fileReader.readAsArrayBuffer(blob);
+//         };
+//         mediaRecorder.start();
+//         console.log('Started recording...');
+//         setTimeout(() => {
+//             mediaRecorder.stop();
+//             console.log('Stopped recording');
+//         }, 5000);
+//     })
+//     .catch(function (err) {
+//         console.log(`[getUserMedia catch] err: ${err}`);
+//     });
 
 export default App;
