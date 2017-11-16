@@ -10,7 +10,10 @@ const DFT = route => {
     const id = Number(route.match.params.id);
     const signal1 = inputSignal1.x;
     const signal2 = inputSignal2.x;
-    const x = signal1.map((value, index) => value + signal2[index]);
+    // const x = signal1.map((value, index) => value + signal2[index]);
+    // const x = inputSignal2.x;
+    const signal3 = signal1.map((value, index) => value + signal2[index]);
+    const x = signal3.slice(0, 32).concat(Array(128 - 32).fill(0));
     const { ReX, ImX } = dft(x);
     const { MagX, PhaseX } = rectToPolar(ReX, ImX);
     const x2 = inverseDft(ReX, ImX);
