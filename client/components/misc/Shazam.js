@@ -8,8 +8,21 @@ const STATE_RECORDING = 1;
 const STATE_RECORDED = 2;
 
 const SAMPLE_RATE = 8192;
-const NUM_CHUNKS_PER_SEC = 32;
+const NUM_CHUNKS_PER_SEC = 8;
 const POINTS_PER_CHUNK = SAMPLE_RATE / NUM_CHUNKS_PER_SEC;
+
+const RANGES = [40, 80, 120, 180, 300];
+const NUM_RANGES = RANGES.length - 1;
+const LOWER_LIMIT = RANGES[0];
+const UPPER_LIMIT = RANGES.slice(-1)[0];
+
+const getRangeIndex = freq => {
+    if (freq < LOWER_LIMIT || freq > UPPER_LIMIT) {
+        throw new Error(`Frequency ${freq} is out of range.`);
+    }
+    const loop = i => freq > RANGES[i + 1] ? loop(i + 1) : i;
+    return loop(0);
+};
 
 class Shazam extends Component {
 
@@ -31,26 +44,42 @@ class Shazam extends Component {
         this.offlineAudioContext = null;
     }
 
-    logBiggestValues(MagX) {
+    logBiggestValuesForChunk(MagX, n = 10) {
         const zipped = MagX.map((v, index) => ({ v, index }));
         const sorted = zipped.sort((a, b) => b.v - a.v);
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < n; i++) {
             console.log(JSON.stringify(sorted[i]));
         }
     }
 
+    logRangesForChunk(MagX) {
+        const highs = Array(NUM_RANGES).fill({ freq: -1, value: Number.MIN_VALUE });
+        for (let freq = LOWER_LIMIT; freq <= UPPER_LIMIT; freq++) {
+            const value = MagX[freq];
+            const rangeIndex = getRangeIndex(freq);
+            if (value > highs[rangeIndex].value) {
+                highs[rangeIndex] = { freq, value };
+            }
+        }
+        highs.forEach((high, index) => {
+            console.log(`highs[${index}]: ${JSON.stringify(highs[index])}`);
+        });
+    }
+
     processSignal(fullSignal) {
         const unpaddedSignal = fullSignal.slice(0, POINTS_PER_CHUNK);
-        const paddedSignal = unpaddedSignal.concat(Array(SAMPLE_RATE - POINTS_PER_CHUNK).fill(0));
+        const zeros = Array(SAMPLE_RATE - unpaddedSignal.length).fill(0);
+        const paddedSignal = unpaddedSignal.concat(zeros);
         const { outReXcomplex: ReX, outImXcomplex: ImX } = realFft(paddedSignal);
-        const { MagX } = rectToPolar(ReX, ImX);
-        const MagXhalf = MagX.slice(0, SAMPLE_RATE / 2 + 1);
+        const { MagX: MagXfull } = rectToPolar(ReX, ImX);
+        const MagX = MagXfull.slice(0, SAMPLE_RATE / 2 + 1);
         this.setState({
             currentState: STATE_RECORDED,
             unpaddedSignal,
-            MagX: MagXhalf
+            MagX
         });
-        this.logBiggestValues(MagXhalf);
+        this.logBiggestValuesForChunk(MagX, 20);
+        this.logRangesForChunk(MagX);
     }
 
     record() {
