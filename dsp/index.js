@@ -4,3 +4,4 @@ export * from './dft';
 export * from './fft';
 export * from './polar';
 export * from './filterKernel';
+export * from './signalGenerators';

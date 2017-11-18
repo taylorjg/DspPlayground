@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
-import { dft } from '../../../dsp';
-import { rectToPolar } from '../../../dsp';
-import inputSignal1 from '../../../InputSignals/sine_80_4096_4096.json';
-import inputSignal2 from '../../../InputSignals/sine_440_4096_4096.json';
-import inputSignal3 from '../../../InputSignals/sine_1000_4096_4096.json';
+import { realFft, rectToPolar, sineWave, addSignals } from '../../../dsp';
 
 const STATE_NOT_RECORDING = 0;
 const STATE_RECORDING = 1;
 const STATE_RECORDED = 2;
 
-const SAMPLE_RATE = 4096; // 8192;
+const SAMPLE_RATE = 8192;
 const NUM_CHUNKS_PER_SEC = 32;
-const CHUNK_SIZE = SAMPLE_RATE / NUM_CHUNKS_PER_SEC;
+const POINTS_PER_CHUNK = SAMPLE_RATE / NUM_CHUNKS_PER_SEC;
 
 class Shazam extends Component {
 
@@ -34,24 +30,27 @@ class Shazam extends Component {
         this.offlineAudioContext.close();
         this.offlineAudioContext = null;
     }
+
     logBiggestValues(MagX) {
-        const zipped = MagX.map((v, index) => ({v, index}));
+        const zipped = MagX.map((v, index) => ({ v, index }));
         const sorted = zipped.sort((a, b) => b.v - a.v);
         for (let i = 0; i < 20; i++) {
             console.log(JSON.stringify(sorted[i]));
         }
     }
+
     processSignal(fullSignal) {
-        const unpaddedSignal = fullSignal.slice(0, CHUNK_SIZE);
-        const paddedSignal = unpaddedSignal.concat(Array(SAMPLE_RATE - CHUNK_SIZE).fill(0));
-        const { ReX, ImX } = dft(paddedSignal);
+        const unpaddedSignal = fullSignal.slice(0, POINTS_PER_CHUNK);
+        const paddedSignal = unpaddedSignal.concat(Array(SAMPLE_RATE - POINTS_PER_CHUNK).fill(0));
+        const { outReXcomplex: ReX, outImXcomplex: ImX } = realFft(paddedSignal);
         const { MagX } = rectToPolar(ReX, ImX);
+        const MagXhalf = MagX.slice(0, SAMPLE_RATE / 2 + 1);
         this.setState({
             currentState: STATE_RECORDED,
             unpaddedSignal,
-            MagX
+            MagX: MagXhalf
         });
-        this.logBiggestValues(MagX);
+        this.logBiggestValues(MagXhalf);
     }
 
     record() {
@@ -127,9 +126,10 @@ class Shazam extends Component {
     }
 
     onTestSignal() {
-        // TODO: add a dsp function to add signals together.
-        // const fullSignal = addSignals(inputSignal1.x, inputSignal2.x, inputSignal3.x);
-        const fullSignal = inputSignal1.x.map((v, index) => v + inputSignal2.x[index] + inputSignal3.x[index]);
+        const signal1 = sineWave(80, SAMPLE_RATE);
+        const signal2 = sineWave(440, SAMPLE_RATE);
+        const signal3 = sineWave(1000, SAMPLE_RATE);
+        const fullSignal = addSignals(signal1, signal2, signal3);
         this.processSignal(fullSignal);
     }
 
