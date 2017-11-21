@@ -2,27 +2,14 @@ import React, { Component } from 'react';
 import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
 import { realFft, rectToPolar, sineWave, addSignals } from '../../../dsp';
+import { findHighs, SAMPLE_RATE, POINTS_PER_CHUNK } from '../../../shazam';
+import mp3 from '../../../InputSignals/440-2.json';
+// import mp3 from '../../../InputSignals/85.json';
+// import mp3 from '../../../InputSignals/walton.json';
 
 const STATE_NOT_RECORDING = 0;
 const STATE_RECORDING = 1;
 const STATE_RECORDED = 2;
-
-const SAMPLE_RATE = 8192;
-const NUM_CHUNKS_PER_SEC = 8;
-const POINTS_PER_CHUNK = SAMPLE_RATE / NUM_CHUNKS_PER_SEC;
-
-const RANGES = [40, 80, 120, 180, 300];
-const NUM_RANGES = RANGES.length - 1;
-const LOWER_LIMIT = RANGES[0];
-const UPPER_LIMIT = RANGES.slice(-1)[0];
-
-const getRangeIndex = freq => {
-    if (freq < LOWER_LIMIT || freq > UPPER_LIMIT) {
-        throw new Error(`Frequency ${freq} is out of range.`);
-    }
-    const loop = i => freq > RANGES[i + 1] ? loop(i + 1) : i;
-    return loop(0);
-};
 
 class Shazam extends Component {
 
@@ -53,16 +40,8 @@ class Shazam extends Component {
     }
 
     logRangesForChunk(MagX) {
-        const highs = Array(NUM_RANGES).fill({ freq: -1, value: Number.MIN_VALUE });
-        for (let freq = LOWER_LIMIT; freq <= UPPER_LIMIT; freq++) {
-            const value = MagX[freq];
-            const rangeIndex = getRangeIndex(freq);
-            if (value > highs[rangeIndex].value) {
-                highs[rangeIndex] = { freq, value };
-            }
-        }
-        highs.forEach((high, index) => {
-            console.log(`highs[${index}]: ${JSON.stringify(highs[index])}`);
+        findHighs(MagX).forEach((high, index) => {
+            console.log(`highs[${index}]: ${JSON.stringify(high)}`);
         });
     }
 
@@ -196,6 +175,9 @@ class Shazam extends Component {
                     <DataPoints dataPoints={this.state.MagX} caption="Mag X[n]" />
                 </div>
 
+                <div className="row">
+                    <Diagram dataPoints={mp3.x.slice(1024, 1024 + 128)} caption="mp3" joinPoints={true} />
+                </div>
                 <div className="row">
                     <Diagram dataPoints={this.state.unpaddedSignal} caption="x[n]" joinPoints={true} />
                 </div>
