@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
-import { realFft, rectToPolar, sineWave, addSignals } from '../../../dsp';
-import { findHighs, SAMPLE_RATE, POINTS_PER_CHUNK } from '../../../shazam';
-import mp3 from '../../../InputSignals/440-2.json';
+// import { realFft, rectToPolar, sineWave, addSignals } from '../../../dsp';
+import { realFft, rectToPolar } from '../../../dsp';
+import { findHighs, SAMPLE_RATE, POINTS_PER_CHUNK, NUM_CHUNKS_PER_SEC } from '../../../shazam';
+// import mp3 from '../../../InputSignals/440-2.json';
 // import mp3 from '../../../InputSignals/85.json';
-// import mp3 from '../../../InputSignals/walton.json';
+// import mp3 from '../../../InputSignals/Walton.json';
+import mp3 from '../../../InputSignals/AlmostBlue.json';
 
 const STATE_NOT_RECORDING = 0;
 const STATE_RECORDING = 1;
@@ -46,7 +48,9 @@ class Shazam extends Component {
     }
 
     processSignal(fullSignal) {
-        const unpaddedSignal = fullSignal.slice(0, POINTS_PER_CHUNK);
+        const from = 20 * NUM_CHUNKS_PER_SEC * POINTS_PER_CHUNK;
+        const to = from + POINTS_PER_CHUNK;
+        const unpaddedSignal = fullSignal.slice(from, to);
         const zeros = Array(SAMPLE_RATE - unpaddedSignal.length).fill(0);
         const paddedSignal = unpaddedSignal.concat(zeros);
         const { outReXcomplex: ReX, outImXcomplex: ImX } = realFft(paddedSignal);
@@ -134,10 +138,11 @@ class Shazam extends Component {
     }
 
     onTestSignal() {
-        const signal1 = sineWave(80, SAMPLE_RATE);
-        const signal2 = sineWave(440, SAMPLE_RATE);
-        const signal3 = sineWave(1000, SAMPLE_RATE);
-        const fullSignal = addSignals(signal1, signal2, signal3);
+        // const signal1 = sineWave(80, SAMPLE_RATE);
+        // const signal2 = sineWave(440, SAMPLE_RATE);
+        // const signal3 = sineWave(1000, SAMPLE_RATE);
+        // const fullSignal = addSignals(signal1, signal2, signal3);
+        const fullSignal = mp3.x;
         this.processSignal(fullSignal);
     }
 
@@ -175,9 +180,6 @@ class Shazam extends Component {
                     <DataPoints dataPoints={this.state.MagX} caption="Mag X[n]" />
                 </div>
 
-                <div className="row">
-                    <Diagram dataPoints={mp3.x.slice(1024, 1024 + 128)} caption="mp3" joinPoints={true} />
-                </div>
                 <div className="row">
                     <Diagram dataPoints={this.state.unpaddedSignal} caption="x[n]" joinPoints={true} />
                 </div>
