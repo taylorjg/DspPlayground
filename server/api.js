@@ -1,7 +1,8 @@
 const express = require('express');
 
 const match = (req, res) => {
-    // const passage = req.body.passage;
+    const passage = req.body.passage;
+    console.log(`passage length: ${passage.length}`);
     const result = {
         match: false
     };

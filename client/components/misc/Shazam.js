@@ -1,17 +1,14 @@
+/* global $ */
+
 import React, { Component } from 'react';
-import DataPoints from '../DataPoints';
-import Diagram from '../Diagram';
-// import { realFft, rectToPolar, sineWave, addSignals } from '../../../dsp';
-import { realFft, rectToPolar } from '../../../dsp';
-import { findHighs, SAMPLE_RATE, POINTS_PER_CHUNK, NUM_CHUNKS_PER_SEC } from '../../../shazam';
-// import mp3 from '../../../InputSignals/440-2.json';
-// import mp3 from '../../../InputSignals/85.json';
-// import mp3 from '../../../InputSignals/Walton.json';
-import mp3 from '../../../InputSignals/AlmostBlue.json';
+import { SAMPLE_RATE } from '../../../shazam';
 
 const STATE_NOT_RECORDING = 0;
 const STATE_RECORDING = 1;
-const STATE_RECORDED = 2;
+const STATE_SENDING = 3;
+const STATE_MATCH = 4;
+const STATE_NO_MATCH = 5;
+const STATE_ERROR = 6;
 
 class Shazam extends Component {
 
@@ -21,7 +18,6 @@ class Shazam extends Component {
             currentState: STATE_NOT_RECORDING,
         };
         this.onRecord = this.onRecord.bind(this);
-        this.onTestSignal = this.onTestSignal.bind(this);
     }
 
     componentWillMount() {
@@ -33,36 +29,27 @@ class Shazam extends Component {
         this.offlineAudioContext = null;
     }
 
-    logBiggestValuesForChunk(MagX, n = 10) {
-        const zipped = MagX.map((v, index) => ({ v, index }));
-        const sorted = zipped.sort((a, b) => b.v - a.v);
-        for (let i = 0; i < n; i++) {
-            console.log(JSON.stringify(sorted[i]));
-        }
-    }
-
-    logRangesForChunk(MagX) {
-        findHighs(MagX).forEach((high, index) => {
-            console.log(`highs[${index}]: ${JSON.stringify(high)}`);
-        });
-    }
-
-    processSignal(fullSignal) {
-        const from = 20 * NUM_CHUNKS_PER_SEC * POINTS_PER_CHUNK;
-        const to = from + POINTS_PER_CHUNK;
-        const unpaddedSignal = fullSignal.slice(from, to);
-        const zeros = Array(SAMPLE_RATE - unpaddedSignal.length).fill(0);
-        const paddedSignal = unpaddedSignal.concat(zeros);
-        const { outReXcomplex: ReX, outImXcomplex: ImX } = realFft(paddedSignal);
-        const { MagX: MagXfull } = rectToPolar(ReX, ImX);
-        const MagX = MagXfull.slice(0, SAMPLE_RATE / 2 + 1);
+    processSignal(passage) {
         this.setState({
-            currentState: STATE_RECORDED,
-            unpaddedSignal,
-            MagX
+            currentState: STATE_SENDING
         });
-        this.logBiggestValuesForChunk(MagX, 20);
-        this.logRangesForChunk(MagX);
+        const self = this;
+        $.post({
+            url: '/api/match',
+            data: JSON.stringify({passage}),
+            contentType: 'application/json'
+        })
+        .done(response => {
+            self.setState({
+                currentState: response.match ? STATE_MATCH : STATE_NO_MATCH
+            });
+        })
+        .fail(error => {
+            self.setState({
+                currentState: STATE_ERROR,
+                error
+            });
+        });
     }
 
     record() {
@@ -105,8 +92,8 @@ class Shazam extends Component {
                             .then(function (audioBuffer) {
                                 console.log(`[decodeAudioData => then] audioBuffer.sampleRate: ${audioBuffer.sampleRate}`);
                                 const float32Array = audioBuffer.getChannelData(0);
-                                const fullSignal = Array.from(float32Array);
-                                self.processSignal(fullSignal);
+                                const passage = Array.from(float32Array);
+                                self.processSignal(passage);
                             })
                             .catch(function (err) {
                                 console.log(`[decodeAudioData => catch] err: ${err}`);
@@ -137,20 +124,10 @@ class Shazam extends Component {
         this.record();
     }
 
-    onTestSignal() {
-        // const signal1 = sineWave(80, SAMPLE_RATE);
-        // const signal2 = sineWave(440, SAMPLE_RATE);
-        // const signal3 = sineWave(1000, SAMPLE_RATE);
-        // const fullSignal = addSignals(signal1, signal2, signal3);
-        const fullSignal = mp3.x;
-        this.processSignal(fullSignal);
-    }
-
     notRecording() {
         return (
             <div>
                 <button className="btn btn-sm btn-danger" onClick={this.onRecord}>Record</button>
-                <button className="btn btn-sm btn-default" onClick={this.onTestSignal}>Test Signal</button>
             </div>
         );
     }
@@ -163,30 +140,57 @@ class Shazam extends Component {
         );
     }
 
-    recorded() {
+    sending() {
+        return (
+            <div>
+                <p>Sending...</p>
+            </div>
+        );
+    }
+
+    match() {
         return (
             <div>
                 <div>
                     <button className="btn btn-sm btn-danger" onClick={this.onRecord}>Record</button>
-                    <button className="btn btn-sm btn-default" onClick={this.onTestSignal}>Test Signal</button>
                 </div>
 
                 <br />
 
-                <div className="row">
-                    <DataPoints dataPoints={this.state.unpaddedSignal} caption="x[n]" />
-                </div>
-                <div className="row">
-                    <DataPoints dataPoints={this.state.MagX} caption="Mag X[n]" />
-                </div>
-
-                <div className="row">
-                    <Diagram dataPoints={this.state.unpaddedSignal} caption="x[n]" joinPoints={true} />
-                </div>
-                <div className="row">
-                    <Diagram dataPoints={this.state.MagX} caption="Mag X[n]" />
-                </div>
+                <p>Match :)</p>
             </div>
+        );
+    }
+
+    noMatch() {
+        return (
+            <div>
+                <div>
+                <button className="btn btn-sm btn-danger" onClick={this.onRecord}>Record</button>
+            </div>
+
+            <br />
+
+            <p>No Match :(</p>
+        </div>
+        );
+    }
+
+    error() {
+        return (
+            <div>
+                <div>
+                <button className="btn btn-sm btn-danger" onClick={this.onRecord}>Record</button>
+            </div>
+
+            <br />
+
+            {
+                (this.state.error && this.state.error.status && this.state.error.statusText)
+                ? <p>Error!!! ({this.state.error.status} {this.state.error.statusText})</p>
+                : <p>Error!!!</p>
+            }
+        </div>
         );
     }
 
@@ -196,8 +200,14 @@ class Shazam extends Component {
                 return this.notRecording();
             case STATE_RECORDING:
                 return this.recording();
-            case STATE_RECORDED:
-                return this.recorded();
+            case STATE_SENDING:
+                return this.sending();
+            case STATE_MATCH:
+                return this.match();
+            case STATE_NO_MATCH:
+                return this.noMatch();
+            case STATE_ERROR:
+                return this.error();
         }
     }
 }

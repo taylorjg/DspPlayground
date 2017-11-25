@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 const publicFolder = path.join(__dirname, 'public');
 
 const app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '5mb'}));
 app.use('/api', api.router);
 app.use(history());
 app.use('/', express.static(publicFolder));
