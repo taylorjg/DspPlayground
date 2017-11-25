@@ -1,18 +1,20 @@
-const express = require('express');
+import express from 'express';
+import { SAMPLE_RATE } from '../shazam';
 
-const match = (req, res) => {
-    const passage = req.body.passage;
+const tryToMatchPassage = passage => {
     console.log(`passage length: ${passage.length}`);
+    console.log(`SAMPLE_RATE: ${SAMPLE_RATE}`);
     const result = {
         match: false
     };
-    res.status(200).json(result);
+    return result;
 };
 
-const router = express.Router();
-router.post('/match', match);
-
-module.exports = {
-    match,
-    router
+const match = (req, res) => {
+    const passage = req.body.passage;
+    const result = tryToMatchPassage(passage);
+    res.json(result);
 };
+
+export default express.Router()
+    .post('/match', match);

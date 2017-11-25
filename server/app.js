@@ -1,15 +1,15 @@
-const path = require('path');
-const express = require('express');
-const bodyParser = require('body-parser');
-const history = require('connect-history-api-fallback');
-const api = require('./api');
+import path from 'path';
+import express from 'express';
+import bodyParser from 'body-parser';
+import history from 'connect-history-api-fallback';
+import apiRouter from './api';
 
 const port = process.env.PORT || 3000;
 const publicFolder = path.join(__dirname, 'public');
 
 const app = express();
 app.use(bodyParser.json({limit: '5mb'}));
-app.use('/api', api.router);
+app.use('/api', apiRouter);
 app.use(history());
 app.use('/', express.static(publicFolder));
 
