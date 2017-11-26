@@ -10,6 +10,8 @@ const STATE_MATCH = 4;
 const STATE_NO_MATCH = 5;
 const STATE_ERROR = 6;
 
+const PASSAGE_LENGTH_SECS = 5000;
+
 class Shazam extends Component {
 
     constructor(props) {
@@ -109,7 +111,7 @@ class Shazam extends Component {
                 setTimeout(function () {
                     mediaRecorder.stop();
                     console.log('Stopped recording');
-                }, 1000);
+                }, PASSAGE_LENGTH_SECS);
             })
             .catch(function (err) {
                 console.log(`[getUserMedia => catch] err: ${err}`);

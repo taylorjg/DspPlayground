@@ -1,15 +1,13 @@
 import React from 'react';
 import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
-import { correlate } from '../../../dsp';
-import inputSignal1 from '../../../InputSignals/sine_2_128_128.json';
-import inputSignal2 from '../../../InputSignals/sine_8_128_128.json';
+import { correlate, sineWave, addSignals } from '../../../dsp';
 
 const Correlation = route => {
     const id = Number(route.match.params.id);
-    const signal1 = inputSignal1.x;
-    const signal2 = inputSignal2.x;
-    const x = signal1.map((value, index) => value + signal2[index]);
+    const signal1 = sineWave(2, 128);
+    const signal2 = sineWave(8, 128);
+    const x = addSignals(signal1, signal2);
     const h = id === 1 ? signal1 : signal2;
     const y = correlate(x, h);
     return (

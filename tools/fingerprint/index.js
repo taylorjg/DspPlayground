@@ -2,7 +2,7 @@
 // $ node_modules/.bin/babel-node tools/fingerprint/index.js
 
 import * as pcm from 'pcm';
-import { processChunks, SAMPLE_RATE } from '../../shazam';
+import { fingerprint, SAMPLE_RATE } from '../../shazam';
 
 const INPUT_FILE = './InputSignals/AlmostBlue.mp3';
 // const INPUT_FILE = './InputSignals/440-1.mp3';
@@ -31,10 +31,10 @@ pcm.getPcmData(
         else {
             // console.log(`[endCallback] output: ${output}`);
             // console.log(`signal.length: ${signal.length}`);
-            const inputSignal = { x: signal };
-            console.log(JSON.stringify(inputSignal));
-            // const processedChunks = processChunks(signal);
-            // console.log(JSON.stringify(processedChunks, null, 2));
+            // const inputSignal = { x: signal };
+            // console.log(JSON.stringify(inputSignal));
+            const fp = fingerprint(signal);
+            console.log(JSON.stringify(fp, null, 2));
         }
     }
 );

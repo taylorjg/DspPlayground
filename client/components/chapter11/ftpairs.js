@@ -38,20 +38,20 @@ const FTPairs = route => {
                     ? (
                         <div>
                             <div className="row">
-                                <DataPoints dataPoints={MagX} caption="MagX[n]" />
+                                <DataPoints dataPoints={MagX} caption="Mag X[n]" />
                             </div>
                             <div className="row">
-                                <DataPoints dataPoints={PhaseX} caption="PhaseX[n]" />
+                                <DataPoints dataPoints={PhaseX} caption="Phase X[n]" />
                             </div>
                         </div>
                     )
                     : (
                         <div>
                             <div className="row">
-                                <DataPoints dataPoints={ReX} caption="ReX[n]" />
+                                <DataPoints dataPoints={ReX} caption="Re X[n]" />
                             </div>
                             <div className="row">
-                                <DataPoints dataPoints={ImX} caption="ImX[n]" />
+                                <DataPoints dataPoints={ImX} caption="Im X[n]" />
                             </div>
                         </div>
                     )
@@ -65,20 +65,20 @@ const FTPairs = route => {
                     ? (
                         <div>
                             <div className="row">
-                                <Diagram dataPoints={MagX} joinPoints={true} caption="MagX[n]" />
+                                <Diagram dataPoints={MagX} joinPoints={true} caption="Mag X[n]" />
                             </div>
                             <div className="row">
-                                <Diagram dataPoints={PhaseX} joinPoints={true} caption="PhaseX[n]" />
+                                <Diagram dataPoints={PhaseX} joinPoints={true} caption="Phase X[n]" />
                             </div>
                         </div>
                     )
                     : (
                         <div>
                             <div className="row">
-                                <Diagram dataPoints={ReX} joinPoints={true} caption="ReX[n]" />
+                                <Diagram dataPoints={ReX} joinPoints={true} caption="Re X[n]" />
                             </div>
                             <div className="row">
-                                <Diagram dataPoints={ImX} joinPoints={true} caption="ImX[n]" />
+                                <Diagram dataPoints={ImX} joinPoints={true} caption="Im X[n]" />
                             </div>
                         </div>
                     )

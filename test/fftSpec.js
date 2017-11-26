@@ -1,6 +1,5 @@
 import { expect } from 'chai';
-import { dft, fft, inverseFft, realFft, realInverseFft, timeRealToComplex } from '../dsp';
-import sineWave2Hz from '../InputSignals/sine_2_128_128.json';
+import { sineWave, dft, fft, inverseFft, realFft, realInverseFft, timeRealToComplex } from '../dsp';
 
 describe('fft tests', () => {
 
@@ -8,7 +7,7 @@ describe('fft tests', () => {
     const VERY_SMALL_TOLERANCE = 1e-12;
 
     it('fft round trip', () => {
-        const x = sineWave2Hz.x;
+        const x = sineWave(2, 128);
         const { TReXcomplex: TReXcomplex1, TImXcomplex: TImXcomplex1 } = timeRealToComplex(x);
         const { outReXcomplex: FReXcomplex, outImXcomplex: FImXcomplex } = fft(TReXcomplex1, TImXcomplex1);
         const { TReXcomplex: TReXcomplex2, TImXcomplex: TImXcomplex2 } = inverseFft(FReXcomplex, FImXcomplex);
@@ -20,7 +19,7 @@ describe('fft tests', () => {
     });
 
     it('compare realFft result to dft result', () => {
-        const x = sineWave2Hz.x;
+        const x = sineWave(2, 128);
         const { ReX: ReX1, ImX: ImX1 } = dft(x);
         const { outReXcomplex: ReX2, outImXcomplex: ImX2 } = realFft(x);
         const n = x.length;
@@ -32,7 +31,7 @@ describe('fft tests', () => {
     });
 
     it('x => dft => realInverseFft => x', () => {
-        const x1 = sineWave2Hz.x;
+        const x1 = sineWave(2, 128);
         const { ReX, ImX } = dft(x1);
         const { x: x2, zeros } = realInverseFft(ReX, ImX);
         const n = x1.length;
@@ -45,7 +44,7 @@ describe('fft tests', () => {
     });
 
     it('x => realFft => inverseFft => x', () => {
-        const x1 = sineWave2Hz.x;
+        const x1 = sineWave(2, 128);
         const { outReXcomplex: FReXcomplex, outImXcomplex: FImXcomplex } = realFft(x1);
         const { TReXcomplex: x2 } = inverseFft(FReXcomplex, FImXcomplex);
         const n = x1.length;

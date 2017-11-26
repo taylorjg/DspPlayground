@@ -1,13 +1,12 @@
 import { expect } from 'chai';
-import { rectToPolar, polarToRect, dft } from '../dsp';
-import sineWave2Hz from '../InputSignals/sine_2_128_128.json';
+import { sineWave, rectToPolar, polarToRect, dft } from '../dsp';
 
 describe('polar tests', () => {
 
     const VERY_SMALL_TOLERANCE = 1e-12;
 
     it('rect => polar => rect', () => {
-        const x = sineWave2Hz.x;
+        const x = sineWave(2, 128);
         const { ReX: ReX1, ImX: ImX1 } = dft(x);
         const { MagX, PhaseX } = rectToPolar(ReX1, ImX1);
         const { ReX: ReX2, ImX: ImX2 } = polarToRect(MagX, PhaseX);

@@ -1,10 +1,11 @@
 import React from 'react';
 import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
-import { convolve } from '../../../dsp';
+import { convolve, sineWave } from '../../../dsp';
 import { createLowPassFilterKernel } from '../../../dsp';
 import { createHighPassFilterKernel } from '../../../dsp';
-import sineWave2Hz from '../../../InputSignals/sine_2_128_128.json';
+
+const sineWave2Hz = sineWave(2, 128);
 
 // See p. 112 FIGURE 6-5
 const DEMO_1 = {
@@ -13,12 +14,12 @@ const DEMO_1 = {
 };
 
 const DEMO_2 = {
-    x: sineWave2Hz.x,
+    x: sineWave2Hz,
     h: createLowPassFilterKernel()
 };
 
 const DEMO_3 = {
-    x: sineWave2Hz.x,
+    x: sineWave2Hz,
     h: createHighPassFilterKernel()
 };
 

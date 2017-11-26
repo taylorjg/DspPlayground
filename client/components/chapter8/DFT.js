@@ -1,47 +1,42 @@
 import React from 'react';
 import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
-import { dft, inverseDft, rectToPolar } from '../../../dsp';
-import inputSignal1 from '../../../InputSignals/sine_2_128_128.json';
-import inputSignal2 from '../../../InputSignals/sine_8_128_128.json';
+import { dft, inverseDft, rectToPolar, sineWave, addSignals } from '../../../dsp';
 
 const DFT = route => {
 
     const id = Number(route.match.params.id);
-    const signal1 = inputSignal1.x;
-    const signal2 = inputSignal2.x;
-    // const x = signal1.map((value, index) => value + signal2[index]);
-    // const x = inputSignal2.x;
-    const signal3 = signal1.map((value, index) => value + signal2[index]);
-    const x = signal3.slice(0, 32).concat(Array(128 - 32).fill(0));
-    const { ReX, ImX } = dft(x);
+    const signal1 = sineWave(2, 128);
+    const signal2 = sineWave(8, 128);
+    const x1 = addSignals(signal1, signal2);
+    const { ReX, ImX } = dft(x1);
     const { MagX, PhaseX } = rectToPolar(ReX, ImX);
     const x2 = inverseDft(ReX, ImX);
 
     return (
         <div>
             <div className="row">
-                <DataPoints dataPoints={x} caption="x[n]" />
+                <DataPoints dataPoints={x1} caption="x1[n]" />
             </div>
             {
                 (id === 1)
                     ? (
                         <div>
                             <div className="row">
-                                <DataPoints dataPoints={ReX} caption="ReX[n]" />
+                                <DataPoints dataPoints={ReX} caption="Re X[n]" />
                             </div>
                             <div className="row">
-                                <DataPoints dataPoints={ImX} caption="ImX[n]" />
+                                <DataPoints dataPoints={ImX} caption="Im X[n]" />
                             </div>
                         </div>
                     )
                     : (
                         <div>
                             <div className="row">
-                                <DataPoints dataPoints={MagX} caption="MagX[n]" />
+                                <DataPoints dataPoints={MagX} caption="Mag X[n]" />
                             </div>
                             <div className="row">
-                                <DataPoints dataPoints={PhaseX} caption="PhaseX[n]" />
+                                <DataPoints dataPoints={PhaseX} caption="Phase X[n]" />
                             </div>
                         </div>
                     )
@@ -51,27 +46,27 @@ const DFT = route => {
             </div>
 
             <div className="row">
-                <Diagram dataPoints={x} caption="x[n]" />
+                <Diagram dataPoints={x1} caption="x1[n]" />
             </div>
             {
                 (id === 1)
                     ? (
                         <div>
                             <div className="row">
-                                <Diagram dataPoints={ReX} caption="ReX[n]" />
+                                <Diagram dataPoints={ReX} caption="Re X[n]" />
                             </div>
                             <div className="row">
-                                <Diagram dataPoints={ImX} caption="ImX[n]" />
+                                <Diagram dataPoints={ImX} caption="Im X[n]" />
                             </div>
                         </div>
                     )
                     : (
                         <div>
                             <div className="row">
-                                <Diagram dataPoints={MagX} caption="MagX[n]" />
+                                <Diagram dataPoints={MagX} caption="Mag X[n]" />
                             </div>
                             <div className="row">
-                                <Diagram dataPoints={PhaseX} caption="PhaseX[n]" />
+                                <Diagram dataPoints={PhaseX} caption="Phase X[n]" />
                             </div>
                         </div>
                     )
