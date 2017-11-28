@@ -1,5 +1,7 @@
 // Use the following command to run this program:
 // $ node_modules/.bin/babel-node tools/fingerprint/index.js
+// or
+// node -r babel-register tools/fingerprint
 
 import * as pcm from 'pcm';
 import { fingerprint, SAMPLE_RATE } from '../../shazam';

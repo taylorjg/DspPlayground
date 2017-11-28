@@ -1,7 +1,7 @@
 /* global $ */
 
 import React, { Component } from 'react';
-import { SAMPLE_RATE } from '../../../shazam';
+import { SAMPLE_RATE, fingerprint } from '../../../shazam';
 
 const STATE_NOT_RECORDING = 0;
 const STATE_RECORDING = 1;
@@ -36,22 +36,23 @@ class Shazam extends Component {
             currentState: STATE_SENDING
         });
         const self = this;
+        const passageFingerprint = fingerprint(passage);
         $.post({
             url: '/api/match',
-            data: JSON.stringify({passage}),
+            data: JSON.stringify({ passageFingerprint }),
             contentType: 'application/json'
         })
-        .done(response => {
-            self.setState({
-                currentState: response.match ? STATE_MATCH : STATE_NO_MATCH
+            .done(response => {
+                self.setState({
+                    currentState: response.match ? STATE_MATCH : STATE_NO_MATCH
+                });
+            })
+            .fail(error => {
+                self.setState({
+                    currentState: STATE_ERROR,
+                    error
+                });
             });
-        })
-        .fail(error => {
-            self.setState({
-                currentState: STATE_ERROR,
-                error
-            });
-        });
     }
 
     record() {
@@ -168,13 +169,13 @@ class Shazam extends Component {
         return (
             <div>
                 <div>
-                <button className="btn btn-sm btn-danger" onClick={this.onRecord}>Record</button>
+                    <button className="btn btn-sm btn-danger" onClick={this.onRecord}>Record</button>
+                </div>
+
+                <br />
+
+                <p>No Match :(</p>
             </div>
-
-            <br />
-
-            <p>No Match :(</p>
-        </div>
         );
     }
 
@@ -182,17 +183,17 @@ class Shazam extends Component {
         return (
             <div>
                 <div>
-                <button className="btn btn-sm btn-danger" onClick={this.onRecord}>Record</button>
+                    <button className="btn btn-sm btn-danger" onClick={this.onRecord}>Record</button>
+                </div>
+
+                <br />
+
+                {
+                    (this.state.error && this.state.error.status && this.state.error.statusText)
+                        ? <p>Error!!! ({this.state.error.status} {this.state.error.statusText})</p>
+                        : <p>Error!!!</p>
+                }
             </div>
-
-            <br />
-
-            {
-                (this.state.error && this.state.error.status && this.state.error.statusText)
-                ? <p>Error!!! ({this.state.error.status} {this.state.error.statusText})</p>
-                : <p>Error!!!</p>
-            }
-        </div>
         );
     }
 
