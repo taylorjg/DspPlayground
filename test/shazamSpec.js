@@ -22,27 +22,30 @@ const loadMp3 = (filename, cb) => {
     );
 };
 
-describe('Shazam tests', () => {
+describe.skip('Shazam tests', () => {
+    
+    describe('basic matching', () => {
 
-    it('440 Hz', done => {
-        loadMp3('./InputSignals/440.mp3', (err, song) => {
-            expect(err).to.be.null;
-            const songFingerprint = fingerprint(song);
-            const passageFingerprint = fingerprint(passage440);
-            const { match } = tryToMatchPassage(passageFingerprint, songFingerprint);
-            expect(match).to.be.true;
-            done();
+        it('440 Hz', done => {
+            loadMp3('./InputSignals/440.mp3', (err, song) => {
+                expect(err).to.be.null;
+                const songFingerprint = fingerprint(song);
+                const passageFingerprint = fingerprint(passage440);
+                const { match } = tryToMatchPassage(passageFingerprint, songFingerprint);
+                expect(match).to.be.true;
+                done();
+            });
         });
-    });
 
-    it('AlmostBlue', done => {
-        loadMp3('./InputSignals/AlmostBlue.mp3', (err, song) => {
-            expect(err).to.be.null;
-            const songFingerprint = fingerprint(song);
-            const passageFingerprint = fingerprint(passageAlmostBlue);
-            const { match } = tryToMatchPassage(passageFingerprint, songFingerprint);
-            expect(match).to.be.true;
-            done();
+        it('AlmostBlue', done => {
+            loadMp3('./InputSignals/AlmostBlue.mp3', (err, song) => {
+                expect(err).to.be.null;
+                const songFingerprint = fingerprint(song);
+                const passageFingerprint = fingerprint(passageAlmostBlue);
+                const { match } = tryToMatchPassage(passageFingerprint, songFingerprint);
+                expect(match).to.be.true;
+                done();
+            });
         });
     });
 });
