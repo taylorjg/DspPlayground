@@ -7,7 +7,7 @@ import { createHighPassFilterKernel } from '../../../dsp';
 
 const sineWave2Hz = sineWave(2, 128);
 
-// See p. 112 FIGURE 6-5
+// p. 112, FIGURE 6-5
 const DEMO_1 = {
     x: [0, -1, -1.2, 2, 1.2, 1.2, 0.6, 0, -0.6],
     h: [1, -0.5, -0.2, -0.1]

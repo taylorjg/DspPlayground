@@ -1,10 +1,12 @@
 import { realFft, rectToPolar } from '../dsp';
 
 export const SAMPLE_RATE = 8192;
-export const NUM_CHUNKS_PER_SEC = 32;
-export const POINTS_PER_CHUNK = SAMPLE_RATE / NUM_CHUNKS_PER_SEC;
+const POINTS_PER_CHUNK = SAMPLE_RATE / 32;
+// bins: indices 0-127, 32 Hz wide up to 4 KHz
+// const RANGES = [0, 40, 80, 120, 180, 300];
+// const RANGES = [0, 4, 8, 16, 32, 127];
+const RANGES = [0, 2, 6, 32, 127];
 
-const RANGES = [40, 80, 120, 180, 300];
 const NUM_RANGES = RANGES.length - 1;
 const LOWER_LIMIT = RANGES[0];
 const UPPER_LIMIT = RANGES.slice(-1)[0];
@@ -33,7 +35,10 @@ export const findHighs = MagX => {
 };
 
 export const processChunk = chunk => {
-    const { outReXcomplex: ReX, outImXcomplex: ImX } = realFft(chunk);
+    const { outReXcomplex, outImXcomplex } = realFft(chunk);
+    const nd2 = chunk.length / 2;
+    const ReX = outReXcomplex.slice(0, nd2);
+    const ImX = outImXcomplex.slice(0, nd2);
     const { MagX } = rectToPolar(ReX, ImX);
     return findHighs(MagX);
 };
@@ -48,5 +53,7 @@ export const processChunks = signal => {
     });
 };
 
+// TODO: add optional 2nd param: options
+// default to POINTS_PER_CHUNK and RANGES
 export const fingerprint = signal =>
     processChunks(signal).map(items => items.map(item => item.binIndex));

@@ -1,3 +1,4 @@
+// p. 165, TABLE 8-3
 export const rectToPolar = (ReX, ImX) => {
     const n = ReX.length;
     const MagX = Array(n);
@@ -18,6 +19,7 @@ export const rectToPolar = (ReX, ImX) => {
     return { MagX, PhaseX };
 };
 
+// p. 165, TABLE 8-3
 export const polarToRect = (MagX, PhaseX) => {
     const n = MagX.length;
     const ReX = Array(n);

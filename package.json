@@ -12,8 +12,8 @@
     "url": "https://github.com/taylorjg/DspPlayground/issues"
   },
   "scripts": {
-    "start": "babel-node server/app.js",
-    "test": "mocha --require babel-register",
+    "start": "node -r babel-register server/app.js",
+    "test": "mocha -r babel-register",
     "heroku-postbuild": "npm install --dev && webpack"
   },
   "homepage": "https://github.com/taylorjg/DspPlayground#readme",

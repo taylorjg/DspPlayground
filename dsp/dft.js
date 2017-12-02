@@ -1,5 +1,6 @@
 const TWO_TIMES_PI = Math.PI * 2;
 
+// p. 160, TABLE 8-2
 export const dft = x => {
 
     const n = x.length;
@@ -20,6 +21,7 @@ export const dft = x => {
     };
 };
 
+// p. 154, TABLE 8-1
 export const inverseDft = (ReX, ImX) => {
 
     const normalisedReX = normalise(ReX, false);
@@ -37,6 +39,7 @@ export const inverseDft = (ReX, ImX) => {
     return x;
 };
 
+// p. 153, EQUATIONS 8-3
 const normalise = (xs, isIm) => {
     const nover2 = xs.length - 1;
     return xs.map((x, index) => {

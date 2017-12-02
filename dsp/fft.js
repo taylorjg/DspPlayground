@@ -3,6 +3,7 @@ export const timeRealToComplex = x => ({
     TImXcomplex: x.map(() => 0)
 });
 
+// p. 227, TABLE 12-1
 export const frequencyRealToComplex = (FReXreal, FImXreal) => {
     const l = FReXreal.length;
     const n = (l - 1) * 2;
@@ -18,7 +19,7 @@ export const frequencyRealToComplex = (FReXreal, FImXreal) => {
     };
 };
 
-// TABLE 12-7 p. 242
+// p. 242, TABLE 12-7
 export const realFft = x => {
 
     // TODO: implement the even/odd optimisation.
@@ -39,7 +40,7 @@ export const realFft = x => {
     //     return { ReX, ImX };
 };
 
-// TABLE 12-6 p. 239
+// p. 239, TABLE 12-6
 export const realInverseFft = (FReXreal, FImXreal) => {
     const { FReXcomplex, FImXcomplex } = frequencyRealToComplex(FReXreal, FImXreal);
     const sum = FReXcomplex.map((v, index) => v + FImXcomplex[index]);
@@ -49,7 +50,7 @@ export const realInverseFft = (FReXreal, FImXreal) => {
     return { x, zeros: x.map(() => 0) };
 };
 
-// TABLE 12-4 p. 235
+// p. 235, TABLE 12-4
 export const fft = (inReXcomplex, inImXcomplex) => {
 
     const n = inReXcomplex.length;
@@ -108,7 +109,7 @@ export const fft = (inReXcomplex, inImXcomplex) => {
     };
 };
 
-// TABLE 12-5 p. 236
+// p. 236, TABLE 12-5
 export const inverseFft = (FReXcomplex, FImXcomplex) => {
     const { outReXcomplex: a, outImXcomplex: b } = fft(FReXcomplex, FImXcomplex.map(v => -v));
     const n = FReXcomplex.length;

@@ -10,7 +10,7 @@ const STATE_MATCH = 4;
 const STATE_NO_MATCH = 5;
 const STATE_ERROR = 6;
 
-const PASSAGE_LENGTH_SECS = 5000;
+const PASSAGE_LENGTH_SECS = 2000;
 
 class Shazam extends Component {
 

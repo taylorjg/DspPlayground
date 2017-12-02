@@ -11,7 +11,7 @@ const createElement = (elementName, additionalAttributes) => {
     return element;
 };
 
-export const drawDiagram = (svg, values, joinPoints = false) => {
+export const drawDiagram = (svg, values, joinPoints = false, range = null) => {
 
     clear(svg);
 
@@ -26,7 +26,7 @@ export const drawDiagram = (svg, values, joinPoints = false) => {
     drawOuterRect(dimensions, svg);
     drawHorizontalDivisionLines(dimensions, svg);
     drawVerticalDivisionLines(dimensions, svg);
-    drawValues(dimensions, svg, values, joinPoints);
+    drawValues(dimensions, svg, values, joinPoints, range);
 };
 
 const clear = svg => {
@@ -102,14 +102,14 @@ const drawVerticalDivisionLines = (d, svg) => {
     });
 };
 
-const drawValues = (d, svg, values, joinPoints) => {
+const drawValues = (d, svg, values, joinPoints, range) => {
 
     const SQUARE_SIZE = d.aw / 128;
-    const MIN_VALUE = Math.min(...values);
-    const MAX_VALUE = Math.max(...values);
+    const MIN_VALUE = range ? range.min : Math.min(...values);
+    const MAX_VALUE = range ? range.max : Math.max(...values);
     const MAX = Math.ceil(Math.max(Math.abs(MIN_VALUE), Math.abs(MAX_VALUE)));
-    const RANGE = 4 * MAX || 64;
-    const MID_VALUE = 0;
+    const RANGE = range ? range.max - range.min : 4 * MAX || 64;
+    const MID_VALUE = range ? (range.min + range.max) / 2 : 0;
     const MID_Y = d.h / 2;
     const STEP = d.ah / RANGE;
 

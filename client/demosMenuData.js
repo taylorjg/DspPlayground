@@ -89,6 +89,15 @@ export const demosMenuData = [
         ]
     },
     {
+        label: 'Chapter 16: Windowed-Sinc Filters',
+        items: [
+            {
+                link: '/blackman',
+                label: 'Blackman window'
+            }
+        ]
+    },
+    {
         label: 'Miscellaneous',
         items: [
             {

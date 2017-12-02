@@ -6,7 +6,8 @@
 import * as pcm from 'pcm';
 import { fingerprint, SAMPLE_RATE } from '../../shazam';
 
-const INPUT_FILE = './InputSignals/AlmostBlue.mp3';
+// const INPUT_FILE = './InputSignals/AlmostBlue.mp3';
+const INPUT_FILE = './InputSignals/440.mp3';
 // const INPUT_FILE = './InputSignals/440-1.mp3';
 // const INPUT_FILE = './InputSignals/440-2.mp3';
 // const INPUT_FILE = './InputSignals/85.mp3';
