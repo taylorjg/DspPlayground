@@ -8,7 +8,8 @@ import FTPairs from './chapter11/ftpairs';
 import FFT from './chapter12/FFT';
 import RealFFT from './chapter12/RealFFT';
 import Blackman from './chapter16/Blackman';
-import AddingSineWaves from './misc/AddingSineWaves';
+import AddingSignals from './misc/AddingSignals';
+import MultiplyingSignals from './misc/MultiplyingSignals';
 import Shazam from './misc/Shazam';
 
 class App extends Component {
@@ -27,7 +28,8 @@ class App extends Component {
                     <Route path="/fft/demo/:id" component={FFT} />
                     <Route path="/realfft" component={RealFFT} />
                     <Route path="/blackman" component={Blackman} />
-                    <Route path="/misc/addingSineWaves" component={AddingSineWaves} />
+                    <Route path="/misc/addingSignals" component={AddingSignals} />
+                    <Route path="/misc/multiplyingSignals" component={MultiplyingSignals} />
                     <Route path="/misc/shazam" component={Shazam} />
                 </div>
             </BrowserRouter>

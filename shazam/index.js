@@ -1,4 +1,6 @@
-import { realFft, rectToPolar } from '../dsp';
+import { realFft, rectToPolar, multiplySignals } from '../dsp';
+import { blackmanWindow } from '../dsp'; // eslint-disable-line
+import { rectangularWindow } from '../dsp'; // eslint-disable-line
 
 export const SAMPLE_RATE = 8192;
 const POINTS_PER_CHUNK = SAMPLE_RATE / 32;
@@ -35,7 +37,10 @@ export const findHighs = MagX => {
 };
 
 export const processChunk = chunk => {
-    const { outReXcomplex, outImXcomplex } = realFft(chunk);
+    // const window = blackmanWindow(chunk.length);
+    const window = rectangularWindow(chunk.length);
+    const windowed = multiplySignals(chunk, window);
+    const { outReXcomplex, outImXcomplex } = realFft(windowed);
     const nd2 = chunk.length / 2;
     const ReX = outReXcomplex.slice(0, nd2);
     const ImX = outImXcomplex.slice(0, nd2);

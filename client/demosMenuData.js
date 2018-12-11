@@ -101,8 +101,12 @@ export const demosMenuData = [
         label: 'Miscellaneous',
         items: [
             {
-                link: '/misc/addingSineWaves',
-                label: 'Adding Sine Waves (2 Hz + 8 Hz)'
+                link: '/misc/addingSignals',
+                label: 'Adding Signals'
+            },
+            {
+                link: '/misc/multiplyingSignals',
+                label: 'Multiplying Signals'
             },
             {
                 link: '/misc/shazam',

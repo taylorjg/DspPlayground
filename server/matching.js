@@ -12,34 +12,35 @@ const findMatchingPairs = (passageFingerprint, songFingerprint) => {
         songFingerprint.findIndex((songBins, idx2) =>
             idx2 > prevIdx2 && sameBins(passageBins, songBins));
 
-    // const pairs = passageFingerprint.map((passageBins, idx1) => {
-    //     const idx2 = findMatchInSong(passageBins);
-    //     return { idx1, idx2 };
-    // });
-    // return pairs.filter(({ idx2 }) => idx2 >= 0);
+    const pairs = passageFingerprint.map((passageBins, idx1) => {
+        const idx2 = findMatchInSong(passageBins);
+        return { idx1, idx2 };
+    });
+    
+    return pairs.filter(({ idx2 }) => idx2 >= 0);
 
-    const pairs = [];
+    // const pairs = [];
 
-    for (let idx1 = 0; idx1 < passageFingerprint.length; idx1++) {
-        const passageBins = passageFingerprint[idx1];
-        const lastPair = pairs.slice(-1)[0];
-        if (lastPair) {
-            const idx2 = findMatchInSong(passageBins, lastPair.idx2);
-            if (idx2 >= 0) {
-                pairs.push({ idx1, idx2 });
-            }
-            else {
-                const idx2 = findMatchInSong(passageBins);
-                idx2 >= 0 && pairs.push({ idx1, idx2 });
-            }
-        }
-        else {
-            const idx2 = findMatchInSong(passageBins);
-            idx2 >= 0 && pairs.push({ idx1, idx2 });
-        }
-    }
+    // for (let idx1 = 0; idx1 < passageFingerprint.length; idx1++) {
+    //     const passageBins = passageFingerprint[idx1];
+    //     const lastPair = pairs.slice(-1)[0];
+    //     if (lastPair) {
+    //         const idx2 = findMatchInSong(passageBins, lastPair.idx2);
+    //         if (idx2 >= 0) {
+    //             pairs.push({ idx1, idx2 });
+    //         }
+    //         else {
+    //             const idx2 = findMatchInSong(passageBins);
+    //             idx2 >= 0 && pairs.push({ idx1, idx2 });
+    //         }
+    //     }
+    //     else {
+    //         const idx2 = findMatchInSong(passageBins);
+    //         idx2 >= 0 && pairs.push({ idx1, idx2 });
+    //     }
+    // }
 
-    return pairs;
+    // return pairs;
 };
 
 export const tryToMatchPassage = (passageFingerprint, songFingerprint) => {

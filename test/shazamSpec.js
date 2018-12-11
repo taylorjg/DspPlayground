@@ -22,7 +22,7 @@ const loadMp3 = (filename, cb) => {
     );
 };
 
-describe.skip('Shazam tests', () => {
+describe('Shazam tests', () => {
     
     describe('basic matching', () => {
 

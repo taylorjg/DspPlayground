@@ -3,7 +3,7 @@ import DataPoints from '../DataPoints';
 import Diagram from '../Diagram';
 import { sineWave, addSignals } from '../../../dsp';
 
-const AddingSineWaves = () => {
+const AddingSignals = () => {
     const signal1 = sineWave(2, 128);
     const signal2 = sineWave(8, 128);
     const signal3 = addSignals(signal1, signal2);
@@ -32,4 +32,4 @@ const AddingSineWaves = () => {
     );
 };
 
-export default AddingSineWaves;
+export default AddingSignals;
